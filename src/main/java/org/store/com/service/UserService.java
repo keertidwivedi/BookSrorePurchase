@@ -4,6 +4,7 @@ package org.store.com.service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -20,13 +21,13 @@ import org.store.com.repo.UserRepository;
 @Service
 public class UserService {
 	private UserRepository userRepository;
-	//private RoleRepository roleRepository;
+	private RoleRepository roleRepository;
 	@PersistenceContext
 	EntityManager entityManager;
 
 	public UserService(UserRepository userRepository, RoleRepository roleRepository) {
       this.userRepository = userRepository;
-      
+      this.roleRepository = roleRepository;
   }
 
 	
@@ -36,8 +37,6 @@ public class UserService {
 	
 
   public ResponseEntity<Object> createUser(User model) {
-	  
-	  
 	  
 	 List<String> roleNames = new ArrayList<>();
 	 roleNames.add("admin");
@@ -51,26 +50,37 @@ public class UserService {
          user.setId(model.getId());
          user.setUsername(model.getUsername());
          //user.setRole(model.getRole());
-       List<Role> roles1 = new ArrayList<>();
-       entityManager.getTransaction().begin();
-     for(String roleName : roleNames)
-     {
-    	
-		List<Role> found = (List<Role>) entityManager.createQuery("select r from Role e where r.name=roleName",Role.class)
-				.setParameter("name", roleName).getResultList();
-		if(found.isEmpty())
-		{
-			Role role = new Role(roleName);
-			entityManager.persist(role);
-			roles1.add(role);
-		}else {
-			roles1.addAll(found);
-		}
-		user.setRole(roles1);
-		entityManager.persist(user);
-		entityManager.getTransaction().commit();
-	
-     }
+			
+			/*
+			 * List<Role> roles1 = new ArrayList<>();
+			 * entityManager.getTransaction().begin(); for (String roleName : roleNames) {
+			 * 
+			 * List<Role> found = (List<Role>) entityManager
+			 * .createQuery("select r from Role e where r.name=roleName", Role.class)
+			 * .setParameter("name", roleName).getResultList(); if (found.isEmpty()) { Role
+			 * role = new Role(roleName); entityManager.persist(role); roles1.add(role); }
+			 * else { roles1.addAll(found); } user.setRole(roles1);
+			 * entityManager.persist(user); entityManager.getTransaction().commit();
+			 * 
+			 * }
+			 */
+         
+         
+         Optional<Role> roleOpt = roleRepository.findByName("admin");
+         roleOpt.isPresent();
+         if(roleOpt.isPresent())
+         {
+        	 user.getRole().add(roleOpt.get());
+        	 
+         }
+         else
+         {
+        	 Role role = new Role();
+        	 Role savedRole=roleRepository.save(role);
+        	 user.getRole().add(savedRole);
+        	 
+         }
+        
          
     		   
           User savedUser = userRepository.save(user);

@@ -37,6 +37,9 @@ public class Role {
 		this.name = name;
 	}
 
+	public Role() {
+		
+	}
 
 	public List<User> getUsers() {
 		return users;

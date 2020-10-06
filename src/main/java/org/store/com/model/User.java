@@ -24,7 +24,7 @@ public class User {
 	@ManyToMany(targetEntity = Role.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} )
 	@JoinTable(name="user_role",joinColumns = @JoinColumn(name = "user_Id",referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn (name = "role_id",referencedColumnName = "id") )
-	private List<Role> role  ;
+	private List<Role> role = new ArrayList<Role>()  ;
 
 	
 public User()
