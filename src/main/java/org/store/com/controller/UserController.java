@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.store.com.ResponseDto.UserResponseDto;
 import org.store.com.model.User;
 import org.store.com.repo.UserRepository;
 import org.store.com.service.UserService;
@@ -30,10 +31,24 @@ import org.store.com.service.UserService;
 	        this.userRepository = userRepository;
 	    }
 	    //
-	    @PostMapping("/user/create")
-	    public ResponseEntity<Object> createUser(@RequestBody User user) {
-	        return userService.createUser(user);
+	    @PostMapping("/user/create/admin")
+	    public UserResponseDto createRoleAdmin(@RequestBody User userDto) {
+	    	User user = userService.createRoleAdmin(userDto);
+			return new UserResponseDto(userDto.getId(), userDto.getUsername(), userDto.getEmail(), userDto.getPassword());
 	    }
+	    
+	     
+	   
+		@PostMapping("/user/create/user")
+	    public UserResponseDto createUserRoleUser(@RequestBody User userDto) {
+	    	User user = userService.createUserRoleUser(userDto);
+	    	return new UserResponseDto(userDto.getId(), userDto.getUsername(), userDto.getEmail(), userDto.getPassword());
+	    }
+	    
+	    
+	    
+	    
+	    
 	    @GetMapping("/user/details/{id}")
 	    public User getUser(@PathVariable Long id) {
 	        if(userRepository.findById(id).isPresent())

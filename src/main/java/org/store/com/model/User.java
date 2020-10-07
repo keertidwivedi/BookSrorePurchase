@@ -27,6 +27,13 @@ public class User {
 	private List<Role> role = new ArrayList<Role>()  ;
 
 	
+@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
+				+ role + "]";
+	}
+
+
 public User()
 {
 	
