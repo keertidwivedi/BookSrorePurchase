@@ -3,6 +3,7 @@
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,25 +27,40 @@ import org.store.com.service.UserService;
 	  @Autowired
 	    private UserRepository userRepository;
 
+	  UserResponseDto dto;
+	  
 	    public UserController(UserService userService, UserRepository userRepository) {
 	        this.userService = userService;
 	        this.userRepository = userRepository;
 	    }
-	    //
+	    
 	    @PostMapping("/user/create/admin")
-	    public UserResponseDto createRoleAdmin(@RequestBody User userDto) {
-	    	User user = userService.createRoleAdmin(userDto);
-			return new UserResponseDto(userDto.getId(), userDto.getUsername(), userDto.getEmail(), userDto.getPassword());
+	    public ResponseEntity<UserResponseDto> createRoleAdmin(@RequestBody User userDto) {
+	    	UserResponseDto user = userService.createRoleAdmin(userDto);
+			return ResponseEntity.ok().body(user);
 	    }
 	    
 	     
 	   
 		@PostMapping("/user/create/user")
-	    public UserResponseDto createUserRoleUser(@RequestBody User userDto) {
-	    	User user = userService.createUserRoleUser(userDto);
-	    	return new UserResponseDto(userDto.getId(), userDto.getUsername(), userDto.getEmail(), userDto.getPassword());
+	    public ResponseEntity<UserResponseDto> createUserRoleUser(@RequestBody User userDto) {
+	    	UserResponseDto user = userService.createUserRoleUser(userDto);
+	    	return ResponseEntity.ok().body(user);
 	    }
 	    
+		
+		
+		
+		@GetMapping("/all/admin")
+		public ResponseEntity<List<UserResponseDto>> viewAllAdminUsers( ){
+			List<UserResponseDto> user =  userService.viewAllAdminUsers();
+			System.out.println(user);
+			return  ResponseEntity.ok().body(user);
+		}
+		
+		
+		
+		
 	    
 	    
 	    

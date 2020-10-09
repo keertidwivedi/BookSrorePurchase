@@ -31,3 +31,16 @@
  * @Override public User findByUsername(String username) { return
  * userRepository.findByUsername(username); } }
  */
+
+
+
+
+
+
+
+
+/*
+ * getAllAdminENdPoint getAdminById getUpdateAdmin deleteAdxminbyId
+ */
+
+

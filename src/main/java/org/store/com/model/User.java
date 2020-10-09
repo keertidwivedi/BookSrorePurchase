@@ -24,9 +24,12 @@ public class User {
 	@ManyToMany(targetEntity = Role.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} )
 	@JoinTable(name="user_role",joinColumns = @JoinColumn(name = "user_Id",referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn (name = "role_id",referencedColumnName = "id") )
-	private List<Role> role = new ArrayList<Role>()  ;
+	private Set<Role> role = new HashSet<Role>()  ;
 
 	
+
+
+
 @Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
@@ -40,7 +43,7 @@ public User()
 }
 	
 
-	public User(Long id, String username, String email, String password, List<Role> role) {
+	public User(Long id, String username, String email, String password, Set<Role> role) {
 		
 		this.id = id;
 		this.username = username;
@@ -81,12 +84,12 @@ public User()
 		this.password = password;
 	}
 
-	public List<Role> getRole() {
+	public Set<Role> getRole() {
 		return role;
 	}
 
 
-	public void setRole(List role) {
+	public void setRole(Set role) {
 		this.role=role;
 		
 	}
