@@ -1,52 +1,36 @@
 package org.store.com.model;
 
-import java.util.*; 
+import java.util.*;
 
 import javax.persistence.*;
-
-
-
 
 @Entity
 @Table(name = "users")
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String username;
-	
+
+	private String userName;
+
 	private String email;
-	
+
 	private String password;
 
-	@ManyToMany(targetEntity = Role.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} )
-	@JoinTable(name="user_role",joinColumns = @JoinColumn(name = "user_Id",referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn (name = "role_id",referencedColumnName = "id") )
-	private Set<Role> role = new HashSet<Role>()  ;
+	@ManyToMany(targetEntity = Role.class, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_Id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Set<Role> role = new HashSet<Role>();
 
-	
+	public User() {
 
-
-
-@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
-				+ role + "]";
 	}
 
+	public User(Long id, String userName, String email, String password, Set<Role> role) {
 
-public User()
-{
-	
-}
-	
-
-	public User(Long id, String username, String email, String password, Set<Role> role) {
-		
 		this.id = id;
-		this.username = username;
+		this.userName = userName;
 		this.email = email;
 		this.password = password;
 		this.role = role;
@@ -60,12 +44,12 @@ public User()
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getEmail() {
@@ -88,23 +72,9 @@ public User()
 		return role;
 	}
 
-
 	public void setRole(Set role) {
-		this.role=role;
-		
+		this.role = role;
+
 	}
-
-
-	
-
-	
-
-	
-	
-
-	
-	
-	
-	
 
 }
