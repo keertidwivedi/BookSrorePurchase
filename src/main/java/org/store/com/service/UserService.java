@@ -1,7 +1,7 @@
 
 package org.store.com.service;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,9 @@ import javax.persistence.PersistenceContext;
 import javax.swing.event.ListSelectionEvent;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import org.store.com.Exception.StoreException;
 import org.store.com.RequestDto.UserRequestDto;
 import org.store.com.ResponseDto.UserResponseDto;
@@ -30,6 +32,7 @@ public class UserService {
 	@PersistenceContext
 	EntityManager entityManager;
 
+	
 	public UserService(UserRepository userRepository, RoleRepository roleRepository) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
@@ -44,8 +47,9 @@ public class UserService {
 		UserResponseDto userResponseDto = new UserResponseDto();
 		User user = new User();
 		if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
-			System.out.println("the email  already present");
-			return userResponseDto;
+			throw new StoreException("the email  already present");
+			
+			//return userResponseDto;
 
 		} else {
 			user.setEmail(userRequestDto.getEmail());
@@ -93,6 +97,7 @@ public class UserService {
 		User userNewObject = new User();
 		if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
 			throw new StoreException("the email  already present");
+			
 		} else {
 			userNewObject.setEmail(userRequestDto.getEmail());
 			userNewObject.setPassword(userRequestDto.getPassword());
@@ -150,6 +155,7 @@ public class UserService {
 			newUserResponseDto.setEmail(user.getEmail());
 
 			userResponseDtoList.add(newUserResponseDto);
+			
 			System.out.println(userResponseDtoList);
 
 		}
@@ -162,6 +168,7 @@ public class UserService {
 		Optional<Role> userRole = roleRepository.findByName("user");
 		ArrayList<User> adminUsersList = userRepository.findByRole(userRole);
 		UserResponseDto newUSerREsponseDto;
+		
 
 		for (User user : adminUsersList) {
 			newUSerREsponseDto = new UserResponseDto();
@@ -176,13 +183,23 @@ public class UserService {
 
 	}
 
+	
 	public User deleteById(long id) {
 
+		if (id < 1) {
+
+			throw new NullPointerException("id is not present");
+		}
+
 		User userById = userRepository.deleteById(id);
+
 		return userById;
+
 	}
+	 
 
 	public User updateUser(long id, UserRequestDto requestDto) {
+		
 		Optional<User> userFromDBOpt = userRepository.findById(id);
 		if (userFromDBOpt.isEmpty()) {
 			throw new StoreException("User Not FOund Based On ID");
@@ -195,10 +212,78 @@ public class UserService {
 		return updatedUser;
 	}
 
-	/*
-	 * UserReque Exception Throw Custom Exception how to handle global exceptions
-	 * spring(medium articles) diff exception
-	 * 
-	 * 
-	 */
+	
+
+	public Optional<User> getUserById(long id) {
+		Optional<User> UsersList = userRepository.findById(id);
+
+		if (UsersList.get().getId() == id) {
+			return UsersList;
+		}
+
+		return null;
+	}
+	 
+	
+	public  List<UserResponseDto> listAllUsers()
+	{
+		
+		List<UserResponseDto> newArrayListOfUser = new ArrayList();
+		UserResponseDto newUSerREsponseDto;
+	
+		List<User> listOfUsers = userRepository.findAll();
+		
+		for (User user : listOfUsers)
+		{
+			newUSerREsponseDto = new UserResponseDto();
+			newUSerREsponseDto.setId(user.getId());
+			newUSerREsponseDto.setEmail(user.getEmail());
+			newUSerREsponseDto.setName(user.getUserName());
+
+		newArrayListOfUser.add(newUSerREsponseDto);
+		}
+		return newArrayListOfUser;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+	}
+		List<UserResponseDto> userREsponseDtoListOfUserRole = new ArrayList<>();
+		UserResponseDto newUSerREsponseDto = new UserResponseDto();
+		List<User> lstofUSersFromUSerREpository= userRepository.findAll();
+		
+		
+		user.setEmail(userRequestDto.getEmail());
+		user.setPassword(userRequestDto.getPassword());
+		user.setUserName(userRequestDto.getUserName());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		User listOfUsers = lstofUSersFromUSerREpository.get();
+		newUSerREsponseDto.setName(listOfUsers.getUserName());
+		newUSerREsponseDto.setEmail(listOfUsers.getEmail());
+		newUSerREsponseDto.setId(listOfUsers.getId());
+
+		userREsponseDtoListOfUserRole.add(newUSerREsponseDto);
+		System.out.println(userREsponseDtoListOfUserRole);
+		
+	return userREsponseDtoListOfUserRole;
+	}*/
+	}
 }

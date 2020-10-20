@@ -2,6 +2,7 @@
 package org.store.com.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -51,6 +52,17 @@ public class UserController {
 		mLogger.info("createRoleAdmin Controller End() ");
 		return ResponseEntity.ok().body(user);
 	}
+	
+	
+	@GetMapping("/user/all")
+	public ResponseEntity<List<UserResponseDto>> listAllUsers() {
+		mLogger.info("view all users controller getUser Strat()");
+		List<UserResponseDto> listOfUser = userService.listAllUsers();
+	return ResponseEntity.ok().body(listOfUser) ;	
+	}
+	
+	
+	
 
 	@PostMapping("/user/create/user")
 	public ResponseEntity<UserResponseDto> createUserRoleUser(@RequestBody UserRequestDto userDto) {
@@ -87,30 +99,42 @@ public class UserController {
 		return ResponseEntity.ok().body(userRoleUser);
 	}
 
-	@GetMapping("/user/details/{id}")
-	public User getUser(@PathVariable Long id) {
-		mLogger.info("view user details based on ID controller getUser() Strat()");
-		if (userRepository.findById(id).isPresent())
-		{
-			mLogger.info("view user details based on ID controller End()");
-			return userRepository.findById(id).get();
-		}
-		else
-			throw new StoreException("USEr Not Found EXception");
-	}
-
-	@GetMapping("/user/all")
-	public List<User> getUsers() {
-		mLogger.info("view all users controller getUser Strat()");
-		return userRepository.findAll();
-	}
-
+	
+	
+	
+	
+	
+	
+	/*
+	 * @GetMapping("/user/details/{id}") public ResponseEntity<Optional<User>>
+	 * getUserById(@PathVariable long id) {
+	 * mLogger.info("view user details based on ID controller getUser() Strat()");
+	 * List<User> user = userService.getUserById(id); if (user == null) { throw new
+	 * StoreException("no ser based on id"); } return
+	 * ResponseEntity.ok().body(user); }
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 
 	@DeleteMapping(value = "user/delete/{id}")
 	public ResponseEntity<User> deleteById(@PathVariable("id") long id) {
 		mLogger.info("delete user based on id deleteByID() Strat()");
 		User user = userService.deleteById(id);
 		
-
+	
 		return ResponseEntity.ok().body(user);
 	}
 
