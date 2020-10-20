@@ -1,6 +1,6 @@
 package org.store.com.controller;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -31,7 +31,8 @@ public class BookController {
 	@PostMapping("/createBook")
 	public Book createBook(@RequestBody Book book)
 	{
-		return bookRepository.save(book);
+		Book saveBook = bookService.createBook(book);
+		return saveBook;
 	}
 	
 	@GetMapping("/book/{bookName}")

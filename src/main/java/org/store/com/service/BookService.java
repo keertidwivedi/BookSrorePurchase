@@ -30,7 +30,8 @@ public class BookService {
 		newBook.setAuthor(book.getAuthor());
 		newBook.setBookName(book.getBookName());
 		newBook.setQuantity(book.getQuantity());
-
+		newBook.setComment(book.getComment());
+	
 		Book savedBook = bookRepository.save(newBook);
 		return savedBook;
 	}
