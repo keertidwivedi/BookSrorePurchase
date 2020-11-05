@@ -491,3 +491,4 @@ Caused by: org.postgresql.util.PSQLException: ERROR: column "id" of relation "co
 2020-11-05 11:17:05.114  INFO 6120 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2020-11-05 11:17:05.355  INFO 6120 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
 2020-11-05 11:17:05.362  INFO 6120 --- [main] o.s.com.BookStorePurchaseApplication     : Started BookStorePurchaseApplication in 3.607 seconds (JVM running for 4.175)
+2020-11-05 11:48:57.165  WARN 6120 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m53s322ms77µs900ns).
