@@ -15,9 +15,13 @@ public interface BookRepository extends CrudRepository<Book,Long > {
 	
 	List<Book> findByBookName(String bookName);
 	
-	List<Book> deleteByBookName(String bookName);
+//List<Book> deleteByBook(String bookName);
 	
 	Optional<Book> findById(long id);
+	
+	Optional<Book> deleteById(long id );
+
+	
 	
 
 	

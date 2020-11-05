@@ -210,6 +210,9 @@ public class UserService {
 
 		User updatedUser = userRepository.save(updateUser);
 		return updatedUser;
+	
+	
+	
 	}
 
 	
@@ -243,47 +246,6 @@ public class UserService {
 		newArrayListOfUser.add(newUSerREsponseDto);
 		}
 		return newArrayListOfUser;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-	}
-		List<UserResponseDto> userREsponseDtoListOfUserRole = new ArrayList<>();
-		UserResponseDto newUSerREsponseDto = new UserResponseDto();
-		List<User> lstofUSersFromUSerREpository= userRepository.findAll();
-		
-		
-		user.setEmail(userRequestDto.getEmail());
-		user.setPassword(userRequestDto.getPassword());
-		user.setUserName(userRequestDto.getUserName());
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		User listOfUsers = lstofUSersFromUSerREpository.get();
-		newUSerREsponseDto.setName(listOfUsers.getUserName());
-		newUSerREsponseDto.setEmail(listOfUsers.getEmail());
-		newUSerREsponseDto.setId(listOfUsers.getId());
-
-		userREsponseDtoListOfUserRole.add(newUSerREsponseDto);
-		System.out.println(userREsponseDtoListOfUserRole);
-		
-	return userREsponseDtoListOfUserRole;
-	}*/
+	
 	}
 }

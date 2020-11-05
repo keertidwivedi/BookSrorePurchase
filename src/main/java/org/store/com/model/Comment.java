@@ -1,5 +1,7 @@
 package org.store.com.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,19 +9,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.sun.istack.NotNull;
 
 @Entity
+@Table(name = "comment")
 public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long commentsId;
+	private Long id;
 	
 	
 	private String text;
 	
 	 @ManyToOne()
-	    @JoinColumn(name = "book_id", nullable = false)
+	    @JoinColumn(name = "book_id")
 	private Book book;
 	 
 	 
@@ -31,19 +39,19 @@ public class Comment {
 	 
 	 
 
-	public Comment(long commentsId, String text, Book book) {
+	public Comment(Long id, String text, Book book) {
 		
-		this.commentsId = commentsId;
+		this.id = id;
 		this.text = text;
 		this.book = book;
 	}
 
-	public long getCommentsId() {
-		return commentsId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCommentsId(long commentsId) {
-		this.commentsId = commentsId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getText() {
@@ -61,6 +69,17 @@ public class Comment {
 	public void setBook(Book book) {
 		this.book = book;
 	}
+
+
+
+
+
+	
+
+
+
+
+	
 	 
 	 
 	 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GeneratorType;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -32,15 +35,22 @@ public class Book {
 	private String quantity;
 	
 	
-	@OneToMany(targetEntity = Book.class ,mappedBy = "book")
+	@OneToMany(mappedBy = "book",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	 @Column(nullable = false)
 	private Set<Comment> comment = new HashSet<Comment>();
+
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", bookName=" + bookName + ", author=" + author + ", quantity=" + quantity
+				+ ", comment=" + comment + "]";
+	}
 
 	public Book()
 	{
 		
 	}
 
-	public Book(long id, String bookName, String author, String quantity, Set<Comment> comment) {
+	public Book(String bookName, String author, String quantity, Set<Comment> comment) {
 		
 		this.id = id;
 		this.bookName = bookName;
@@ -49,11 +59,11 @@ public class Book {
 		this.comment = comment;
 	}
 
-	public long getBookId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setBookId(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -88,10 +98,8 @@ public class Book {
 	public void setComment(Set<Comment> comment) {
 		this.comment = comment;
 	}
-	
-	
 
-	
+
 
 	
 }
