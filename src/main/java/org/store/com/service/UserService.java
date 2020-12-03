@@ -1,7 +1,7 @@
 
 package org.store.com.service;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +15,10 @@ import javax.swing.event.ListSelectionEvent;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.store.com.Exception.BookNotFoundException;
+import org.store.com.Exception.GlobalExceptionHandler;
 import org.store.com.Exception.StoreException;
 import org.store.com.RequestDto.UserRequestDto;
 import org.store.com.ResponseDto.UserResponseDto;
@@ -25,18 +27,28 @@ import org.store.com.model.User;
 import org.store.com.repo.RoleRepository;
 import org.store.com.repo.UserRepository;
 
-@Service
+@Service("userService")
 public class UserService {
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
 	@PersistenceContext
 	EntityManager entityManager;
 
-	
 	public UserService(UserRepository userRepository, RoleRepository roleRepository) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 	}
+	
+	
+	
+	
+
+	public UserService() {
+			}
+
+
+
+
 
 	// create role "admin"
 	public UserResponseDto createRoleAdmin(UserRequestDto userRequestDto) {
@@ -47,9 +59,9 @@ public class UserService {
 		UserResponseDto userResponseDto = new UserResponseDto();
 		User user = new User();
 		if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
-			throw new StoreException("the email  already present");
-			
-			//return userResponseDto;
+			throw new BookNotFoundException("Email alreay presnt") ;
+
+			// return userResponseDto;
 
 		} else {
 			user.setEmail(userRequestDto.getEmail());
@@ -71,6 +83,13 @@ public class UserService {
 
 			}
 
+			
+			  String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+			    user.setPassword(encodedPassword);
+			
+			
+			
+			
 			User AdminRoleSaved = userRepository.save(user);
 			userResponseDto.setId(AdminRoleSaved.getId());
 			userResponseDto.setEmail(AdminRoleSaved.getEmail());
@@ -97,7 +116,7 @@ public class UserService {
 		User userNewObject = new User();
 		if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
 			throw new StoreException("the email  already present");
-			
+
 		} else {
 			userNewObject.setEmail(userRequestDto.getEmail());
 			userNewObject.setPassword(userRequestDto.getPassword());
@@ -155,7 +174,7 @@ public class UserService {
 			newUserResponseDto.setEmail(user.getEmail());
 
 			userResponseDtoList.add(newUserResponseDto);
-			
+
 			System.out.println(userResponseDtoList);
 
 		}
@@ -168,7 +187,6 @@ public class UserService {
 		Optional<Role> userRole = roleRepository.findByName("user");
 		ArrayList<User> adminUsersList = userRepository.findByRole(userRole);
 		UserResponseDto newUSerREsponseDto;
-		
 
 		for (User user : adminUsersList) {
 			newUSerREsponseDto = new UserResponseDto();
@@ -183,7 +201,6 @@ public class UserService {
 
 	}
 
-	
 	public User deleteById(long id) {
 
 		if (id < 1) {
@@ -196,10 +213,9 @@ public class UserService {
 		return userById;
 
 	}
-	 
 
 	public User updateUser(long id, UserRequestDto requestDto) {
-		
+
 		Optional<User> userFromDBOpt = userRepository.findById(id);
 		if (userFromDBOpt.isEmpty()) {
 			throw new StoreException("User Not FOund Based On ID");
@@ -210,12 +226,8 @@ public class UserService {
 
 		User updatedUser = userRepository.save(updateUser);
 		return updatedUser;
-	
-	
-	
-	}
 
-	
+	}
 
 	public Optional<User> getUserById(long id) {
 		Optional<User> UsersList = userRepository.findById(id);
@@ -226,26 +238,23 @@ public class UserService {
 
 		return null;
 	}
-	 
-	
-	public  List<UserResponseDto> listAllUsers()
-	{
-		
+
+	public List<UserResponseDto> listAllUsers() {
+
 		List<UserResponseDto> newArrayListOfUser = new ArrayList();
 		UserResponseDto newUSerREsponseDto;
-	
+
 		List<User> listOfUsers = userRepository.findAll();
-		
-		for (User user : listOfUsers)
-		{
+
+		for (User user : listOfUsers) {
 			newUSerREsponseDto = new UserResponseDto();
 			newUSerREsponseDto.setId(user.getId());
 			newUSerREsponseDto.setEmail(user.getEmail());
 			newUSerREsponseDto.setName(user.getUserName());
 
-		newArrayListOfUser.add(newUSerREsponseDto);
+			newArrayListOfUser.add(newUSerREsponseDto);
 		}
 		return newArrayListOfUser;
-	
+
 	}
 }

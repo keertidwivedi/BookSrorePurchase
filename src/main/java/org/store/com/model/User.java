@@ -4,6 +4,9 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -18,14 +21,16 @@ public class User {
 
 	private String password;
 
-	@ManyToMany(targetEntity = Role.class, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
-			CascadeType.REFRESH })
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER  )
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_Id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> role = new HashSet<Role>();
 
-	public User() {
-
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password + ", role="
+				+ role + "]";
 	}
+
 
 	public User(Long id, String userName, String email, String password, Set<Role> role) {
 
@@ -35,6 +40,24 @@ public class User {
 		this.password = password;
 		this.role = role;
 	}
+	
+	
+	
+	
+
+	public User() {
+		
+	}
+
+
+	
+	public User(Long id, String userName, String email, String password) {
+		this.id = id;
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -77,4 +100,5 @@ public class User {
 
 	}
 
+	 
 }

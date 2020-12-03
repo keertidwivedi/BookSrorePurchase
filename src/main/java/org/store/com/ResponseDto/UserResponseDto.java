@@ -1,5 +1,6 @@
 package org.store.com.ResponseDto;
 
+import org.springframework.http.HttpStatus;
 import org.store.com.model.User;
 
 public class UserResponseDto {
@@ -42,11 +43,21 @@ public class UserResponseDto {
 	}
 
 	public UserResponseDto(Long id, String name, String email, String password) {
-		super();
+	
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+	}
+
+	
+	
+	
+	
+	
+	public UserResponseDto(String name, String email) {
+		this.name = name;
+		this.email = email;
 	}
 
 	public UserResponseDto() {
@@ -56,6 +67,8 @@ public class UserResponseDto {
 	public UserResponseDto(User user) {
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 	@Override
 	public String toString() {

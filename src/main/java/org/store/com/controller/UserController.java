@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +32,10 @@ import org.store.com.service.UserService;
 public class UserController {
 
 	private final Logger mLogger = LoggerFactory.getLogger(UserController.class);
+	
 	@Autowired
-	private UserService userService;
+	private UserService userService = new UserService();
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -54,7 +57,9 @@ public class UserController {
 	}
 	
 	
+	
 	@GetMapping("/user/all")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<UserResponseDto>> listAllUsers() {
 		mLogger.info("view all users controller getUser Strat()");
 		List<UserResponseDto> listOfUser = userService.listAllUsers();
@@ -79,7 +84,7 @@ public class UserController {
 
 
 
-	@GetMapping("/all/admin/role")
+	@GetMapping("/admin/role")
 	public ResponseEntity<List<UserResponseDto>> getAdmin() {
 		mLogger.info("view all admin role list controller getAdmin() Strat()");
 		
@@ -90,7 +95,7 @@ public class UserController {
 		return ResponseEntity.ok().body(adminUser);
 	}
 
-	@GetMapping("/all/user/role")
+	@GetMapping("/user/role")
 	public ResponseEntity<List<UserResponseDto>> getUser() {
 		mLogger.info("view all user role list controller getUser() Strat()");
 		List<UserResponseDto> userRoleUser = userService.getUser();

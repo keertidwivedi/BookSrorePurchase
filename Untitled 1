@@ -1,0 +1,37 @@
+class Dog
+{
+
+		barking
+		runng
+		
+		
+		void barking()
+		{
+		syso("Dog is barking");
+		}
+		
+		
+
+}
+
+
+class Animal
+{
+
+psvm(String[] args)
+{
+
+Dog dog = new Dog();
+dog.barking();
+
+Dog()
+{
+	
+}
+
+
+}
+
+
+
+}

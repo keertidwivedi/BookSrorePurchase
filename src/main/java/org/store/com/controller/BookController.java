@@ -1,6 +1,7 @@
+
 package org.store.com.controller;
 
-import java.util.List; 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -26,89 +27,56 @@ import org.store.com.service.BookService;
 @RestController
 public class BookController {
 	private final Logger mLogger = LoggerFactory.getLogger(BookController.class);
+
 	@Autowired
 	private BookRepository bookRepository;
+
 	@Autowired
 	private BookService bookService;
-	
-	
-	
-	
+
 	@PostMapping("/book")
-	public Book createBook(@RequestBody Book book)
-	{
+	public Book createBook(@RequestBody Book book) {
 		Book saveBook = bookService.createBook(book);
 		return saveBook;
 	}
-	
+
 	@GetMapping("/book/{bookName}")
-	public List<Book> getBookByName(@PathVariable String bookName)
-	{
-		mLogger.info("getBookByNAme Controller has Strated()+"+bookName);
+	public List<Book> getBookByName(@PathVariable String bookName) {
+		mLogger.info("getBookByNAme Controller has Strated()+" + bookName);
 		List<Book> bookByName = bookService.getBookByName(bookName);
-		mLogger.info("Recieved bookbyname"+bookByName);
+		mLogger.info("Recieved bookbyname" + bookByName);
 		mLogger.info("getBookByNAme Controller has Ended();");
 		return bookByName;
-		
+
 	}
-	
-	
-	
-	@GetMapping("/book/{id}")
-	public Optional<Book> getBookByd(@PathVariable("id") long bookID)
-	{
-		mLogger.info("getBookByd Controller has Strated()+"+bookID);
-		
+
+	@GetMapping("/books/{id}")
+	public Optional<Book> getBookByd(@PathVariable("id") long bookID) {
+		mLogger.info("getBookByd Controller has Strated()+" + bookID);
+
 		Optional<Book> bookBasedOnId = bookService.getBookById(bookID);
-		mLogger.info("Recieved bookbyname"+bookBasedOnId);
+		mLogger.info("Recieved bookbyname" + bookBasedOnId);
 		mLogger.info("getBookByd Controller has Ended();");
 		return bookBasedOnId;
-		
+
 	}
-	
-	
+
 	@DeleteMapping("/book/{id}")
-	public Optional<Book> deleteById(@PathVariable("id") long bookId)
-	{
-		mLogger.info("deleteById Controller has Strated()+"+bookId);
+	public Optional<Book> deleteById(@PathVariable("id") long bookId) {
+		mLogger.info("deleteById Controller has Strated()+" + bookId);
 		Optional<Book> deletedBook = bookService.deleteById(bookId);
-		
-		mLogger.info("deleted bookbyid"+deletedBook);
+
+		mLogger.info("deleted bookbyid" + deletedBook);
 		mLogger.info("deleteById Controller has Ended();");
 		return deletedBook;
 	}
-	
-	 
-	
-	@PutMapping("book/{id}") 
-	public ResponseEntity<Book> updateBook(@PathVariable("id") long id,BookRequestDto requestDto) {
 
-	Book updateBook = bookService.updateBook(id, requestDto);
-	mLogger.debug("Recived updated book based on id updateUSer() :"+updateBook);
-	return ResponseEntity.ok().body(updateBook);
+	@PutMapping("/book/{id}")
+	public ResponseEntity<Book> updateBook(@PathVariable("id") long id, BookRequestDto requestDto) {
+
+		Book updateBook = bookService.updateBook(id, requestDto);
+		mLogger.debug("Recived updated book based on id updateUSer() :" + updateBook);
+		return ResponseEntity.ok().body(updateBook);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

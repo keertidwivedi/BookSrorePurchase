@@ -1,13 +1,15 @@
 package org.store.com.RequestDto;
 
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 
 public class UserRequestDto 
 {
-	private Long id;
 	
 	@NotNull
 	@Size(min =7)
@@ -17,18 +19,23 @@ public class UserRequestDto
 	
 	@NotNull
 	@NotBlank(message =  "email is mandatory")
+	@UniqueElements
 	private String email;
 	
 	@NotBlank(message =  "password is mandatory")
-	@Size(min = 10,message = "Should contain one Capital and one special charecter")
+	@Size(min = 10,max = 60,message = "Should contain one Capital and one special charecter")
 	private String password;
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
+
+
+
+	public UserRequestDto(@NotNull @Size(min = 7) @NotBlank(message = "Name is mandatory") String userName,
+			@NotNull @NotBlank(message = "email is mandatory") @UniqueElements String email,
+			@NotBlank(message = "password is mandatory") @Size(min = 10, max = 60, message = "Should contain one Capital and one special charecter") String password) {
+				this.userName = userName;
+		this.email = email;
+		this.password = password;
 	}
 
 	public String getUserName() {
@@ -41,6 +48,10 @@ public class UserRequestDto
 
 	public String getEmail() {
 		return email;
+	}
+
+	public UserRequestDto() {
+		super();
 	}
 
 	public void setEmail(String email) {
@@ -57,7 +68,7 @@ public class UserRequestDto
 
 	@Override
 	public String toString() {
-		return "UserRequestDto [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password
+		return "UserRequestDto [id="  + ", userName=" + userName + ", email=" + email + ", password=" + password
 				+ "]";
 	}
 

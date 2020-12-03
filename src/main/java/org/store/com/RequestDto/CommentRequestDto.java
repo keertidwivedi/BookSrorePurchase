@@ -11,7 +11,7 @@ import org.store.com.model.Comment;
 public class CommentRequestDto {
 	
 	
-	@Size(min=30)
+	
 	private String text;
 	
 		public String getText() {
