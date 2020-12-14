@@ -19,85 +19,22 @@ import org.store.com.model.User;
 import org.store.com.repo.BookRepository;
 import org.store.com.repo.CommentRepository;
 
-@Service
-public class BookService {
 
-	private final Logger mLogger = LoggerFactory.getLogger(BookController.class);
+public interface BookService {
 
-	@Autowired
-	private BookRepository bookRepository;
-
-	private CommentRepository commentRepository;
-
+	
 	// Create/add a Book
-	public Book createBook(Book book) {
+	Book createBook(Book book);
 
-		Book newBook = new Book();
-		newBook.setAuthor(book.getAuthor());
-		newBook.setBookName(book.getBookName());
-		newBook.setQuantity(book.getQuantity());
-		
-	
-		Book savedBook = bookRepository.save(newBook);
-		return savedBook;
-	}
-
-	public List<Book> getBookByName(String bookName) {
-		mLogger.info("Service Started" + bookName);
-
-		List<Book> searchBook = bookRepository.findByBookName(bookName);
-		
-		return searchBook;
-
-		
-	}
+	List<Book> getBookByName(String bookName);
 
 	
-	public Optional<Book> getBookById(long bookID)
-	{
-		mLogger.info("Service Started" + bookID);
-		Optional<Book> searchbyId =  bookRepository.findById(bookID);
-		mLogger.info("searched record brom datbase" + searchbyId);
-		if(searchbyId.isEmpty())
-		{
-			throw new StoreException("Id not found");
-		}
-		return searchbyId;
-	}
+ Optional<Book> getBookById(long bookID);
 	
-	public  Optional<Book> deleteById(long bookId)
-	{
-		mLogger.info("Service Started" + bookId);
-		Optional<Book> searchbyId =  bookRepository.deleteById(bookId);
-		mLogger.info("searched record brom datbase" + searchbyId);
-		if(searchbyId.isEmpty())
-		{
-			throw new StoreException("Id not found");
-		}
-		return null;
-		
-	}
+	  Optional<Book> deleteById(long bookId);
 	
 	
 	
-public Book updateBook(long id, BookRequestDto requestDto) {
-		
-		Optional<Book> bookFromDBOpt = bookRepository.findById(id);
-		if (bookFromDBOpt.isEmpty()) {
-			throw new StoreException("User Not FOund Based On ID");
-		}
-		Book updateBook = bookFromDBOpt.get();
-		updateBook.setAuthor(requestDto.getAuthor());
-		
-		updateBook.setBookName(requestDto.getBookName());
-		updateBook.setQuantity(requestDto.getQuantity());
-		updateBook.setComment(requestDto.getComment());
-		
-		
-
-		Book updatedBook = bookRepository.save(updateBook);
-		return updateBook;
-}
 	
-
+Book updateBook(long id, BookRequestDto requestDto);
 }

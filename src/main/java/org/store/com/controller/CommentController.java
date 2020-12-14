@@ -27,8 +27,7 @@ import org.store.com.service.CommentService;
 public class CommentController {
 	private final Logger mLogger = LoggerFactory.getLogger(CommentController.class);
 
-	@Autowired
-	private CommentRepository commentRepository;
+	
 
 	@Autowired
 	private BookRepository bookRepository;
@@ -78,12 +77,13 @@ public class CommentController {
 
 	}
 
-	@GetMapping("/book/{bookId}/Comment/{commentId}")
-	public Comment getCommentById(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId,
-			CommentRequestDto commentRequestDto) {
-		Comment BookandCommentId = commentService.getCommentByID(bookId, commentId, commentRequestDto);
-
-		return BookandCommentId;
-	}
-
+	/*
+	 * @GetMapping("/book/{bookId}/Comment/{commentId}") public Comment
+	 * getCommentById(@PathVariable("bookId") long
+	 * bookId, @PathVariable("commentId") long commentId, CommentRequestDto
+	 * commentRequestDto) { Comment BookandCommentId =
+	 * commentService.getCommentByID(bookId, commentId, commentRequestDto);
+	 * 
+	 * return BookandCommentId; }
+	 */
 }

@@ -34,7 +34,7 @@ public class UserController {
 	private final Logger mLogger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
-	private UserService userService = new UserService();
+	private UserService userService;
 	
 	@Autowired
 	private UserRepository userRepository;

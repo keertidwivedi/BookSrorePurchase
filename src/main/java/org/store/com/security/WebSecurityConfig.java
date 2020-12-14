@@ -59,20 +59,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	protected void configure(HttpSecurity http)   {
 		
-		http
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-				.authorizeRequests()
-				.antMatchers("/user/**").hasAuthority("ROLE_ADMIN")
-				.antMatchers(HttpMethod.GET,"/book/**").hasAuthority("ROLE_ADMIN");
+		try {
+			http
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+					.authorizeRequests()
+					.antMatchers("/user/**").hasAuthority("ROLE_ADMIN")
+					.antMatchers(HttpMethod.GET,"/book/**").hasAuthority("ROLE_ADMIN");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
-		http .csrf().disable() .authorizeRequests() .anyRequest().permitAll() 
-		.and()
-		.addFilter(new JwtUserNameAndPasswordAuthennticationFilter(authenticationManager()))
-		.addFilterAfter(new JwtTokenVerify(),JwtUserNameAndPasswordAuthennticationFilter.class);
+		try {
+			http .csrf().disable() .authorizeRequests() .anyRequest().permitAll() 
+			.and()
+			.addFilter(new JwtUserNameAndPasswordAuthennticationFilter(authenticationManager()))
+			.addFilterAfter(new JwtTokenVerify(),JwtUserNameAndPasswordAuthennticationFilter.class);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 	
 	
 

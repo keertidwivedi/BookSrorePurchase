@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -34,8 +35,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RunWith(SpringRunner.class)
-
-@WebMvcTest(value = UserController.class,secure = false)
+@ContextConfiguration
+@WebMvcTest(value = UserController.class)
 class BookStorePurchaseApplicationTests {
 
 	@Autowired
@@ -66,7 +67,6 @@ class BookStorePurchaseApplicationTests {
 
 	@Test
 	public void testCreateUser() throws Exception {
-	
 
 		String URI = "/user/create/admin";
 
