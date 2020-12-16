@@ -7,33 +7,26 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.UniqueElements;
 
+public class UserRequestDto {
 
-public class UserRequestDto 
-{
-	
 	@NotNull
-	@Size(min =7)
-	@NotBlank(message =  "Name is mandatory")
+	@Size(min = 7)
+	@NotBlank(message = "Name is mandatory")
 	private String userName;
-	
-	
+
 	@NotNull
-	@NotBlank(message =  "email is mandatory")
+	@NotBlank(message = "email is mandatory")
 	@UniqueElements
 	private String email;
-	
-	@NotBlank(message =  "password is mandatory")
-	@Size(min = 10,max = 60,message = "Should contain one Capital and one special charecter")
+
+	@NotBlank(message = "password is mandatory")
+	@Size(min = 10, max = 60, message = "Should contain one Capital and one special charecter")
 	private String password;
-
-
-
-
 
 	public UserRequestDto(@NotNull @Size(min = 7) @NotBlank(message = "Name is mandatory") String userName,
 			@NotNull @NotBlank(message = "email is mandatory") @UniqueElements String email,
 			@NotBlank(message = "password is mandatory") @Size(min = 10, max = 60, message = "Should contain one Capital and one special charecter") String password) {
-				this.userName = userName;
+		this.userName = userName;
 		this.email = email;
 		this.password = password;
 	}
@@ -68,8 +61,7 @@ public class UserRequestDto
 
 	@Override
 	public String toString() {
-		return "UserRequestDto [id="  + ", userName=" + userName + ", email=" + email + ", password=" + password
-				+ "]";
+		return "UserRequestDto [id=" + ", userName=" + userName + ", email=" + email + ", password=" + password + "]";
 	}
 
 }

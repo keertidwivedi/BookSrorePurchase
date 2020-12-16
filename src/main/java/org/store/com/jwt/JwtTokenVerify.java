@@ -25,62 +25,47 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.lang.Strings;
 import io.jsonwebtoken.security.Keys;
 
-
-
-
-
-
 public class JwtTokenVerify extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String authorizationHeader = request.getHeader("Authorization");
-		
-		if(com.google.common.base.Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith("Bearer "))
-			
+
+		if (com.google.common.base.Strings.isNullOrEmpty(authorizationHeader)
+				|| !authorizationHeader.startsWith("Bearer "))
+
 		{
 			filterChain.doFilter(request, response);
-			return; 
+			return;
 		}
-	
-		
-		try
-		{
+
+		try {
 			String token = authorizationHeader.replace("Bearer ", "");
-		String secretKey = "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecure";
-		
-		
-		Jws<Claims> claimsJws = Jwts.parser()
-				.setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
-				.parseClaimsJws(token);
-		
-		
-		Claims body = claimsJws.getBody();
-		
-	String userName = 	body.getSubject();
-	
-var authorities =(List<Map<String, String>>)body.get("authorities");
+			String secretKey = "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecure";
 
-Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
-					.map(m -> new SimpleGrantedAuthority(m.get("authority")))
-					.collect(Collectors.toSet());
+			Jws<Claims> claimsJws = Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+					.parseClaimsJws(token);
 
+			Claims body = claimsJws.getBody();
 
+			String userName = body.getSubject();
 
+			var authorities = (List<Map<String, String>>) body.get("authorities");
 
-Authentication authentication = new UsernamePasswordAuthenticationToken(userName, null,simpleGrantedAuthorities);
-SecurityContextHolder.getContext().setAuthentication(authentication);
+			Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
+					.map(m -> new SimpleGrantedAuthority(m.get("authority"))).collect(Collectors.toSet());
 
+			Authentication authentication = new UsernamePasswordAuthenticationToken(userName, null,
+					simpleGrantedAuthorities);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-	}
-		catch(JwtException e  ){
+		} catch (JwtException e) {
 			throw new IllegalStateException(String.format("Token cannot be trusted"));
-			
+
 		}
 		filterChain.doFilter(request, response);
-	
+
 	}
-	
 
 }

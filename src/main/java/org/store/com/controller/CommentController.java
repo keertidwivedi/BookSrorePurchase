@@ -27,8 +27,6 @@ import org.store.com.service.CommentService;
 public class CommentController {
 	private final Logger mLogger = LoggerFactory.getLogger(CommentController.class);
 
-	
-
 	@Autowired
 	private BookRepository bookRepository;
 

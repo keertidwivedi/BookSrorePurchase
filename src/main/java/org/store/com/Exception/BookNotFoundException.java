@@ -1,13 +1,12 @@
 package org.store.com.Exception;
 
-public class BookNotFoundException extends RuntimeException{
-	
+public class BookNotFoundException extends RuntimeException {
+
 	private String Exceptionmessage;
 
-	public BookNotFoundException(String Exceptionmessage)
-	{
+	public BookNotFoundException(String Exceptionmessage) {
 		super(Exceptionmessage);
-		this.Exceptionmessage=Exceptionmessage;
+		this.Exceptionmessage = Exceptionmessage;
 	}
 
 }

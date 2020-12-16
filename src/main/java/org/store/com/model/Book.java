@@ -18,25 +18,29 @@ import org.hibernate.annotations.GeneratorType;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	
+
 	private String bookName;
-	
+
 	private String author;
-	
+
 	private String quantity;
-	
-	
-	@OneToMany(mappedBy = "book",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	 @Column(nullable = false)
+
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Column(nullable = false)
 	private Set<Comment> comment = new HashSet<Comment>();
 
 	@Override
@@ -45,61 +49,12 @@ public class Book {
 				+ ", comment=" + comment + "]";
 	}
 
-	public Book()
-	{
-		
-	}
-
 	public Book(String bookName, String author, String quantity, Set<Comment> comment) {
-		
-		this.id = id;
+
 		this.bookName = bookName;
 		this.author = author;
 		this.quantity = quantity;
 		this.comment = comment;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getBookName() {
-		return bookName;
-	}
-
-	public void setBookName(String bookName) {
-		this.bookName = bookName;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
-
-	public Set<Comment> getComment() {
-		return comment;
-	}
-
-	public void setComment(Set<Comment> comment) {
-		this.comment = comment;
-	}
-
-
-
-	
 }

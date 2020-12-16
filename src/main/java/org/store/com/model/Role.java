@@ -7,6 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.JoinColumn;
 
 import java.util.List;
@@ -14,6 +19,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "role")
 public class Role {
@@ -29,35 +37,7 @@ public class Role {
 	private Set<User> users;
 
 	public Role(String name) {
-		this.id = id;
-		this.name = name;
-	}
-
-	public Role() {
-
-	}
-
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
+	
 		this.name = name;
 	}
 

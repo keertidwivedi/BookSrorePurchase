@@ -16,13 +16,13 @@ import org.store.com.repo.CommentRepository;
 
 @Service
 public class CommentServiceImp implements CommentService {
-	
-	
+
 	private final Logger mLogger = LoggerFactory.getLogger(CommentService.class);
 	@Autowired
 	CommentRepository commentRepository;
 	@Autowired
 	BookRepository bookRepository;
+
 	@Override
 	public Comment createComments(long id, CommentRequestDto commentRequestDto) {
 		mLogger.info("createComments service has Strated()+" + id, commentRequestDto);
@@ -49,9 +49,7 @@ public class CommentServiceImp implements CommentService {
 			throw new BookNotFoundException("invalid id");
 
 	}
-	
-	
-	
+
 	@Override
 	public List<Comment> getComments(long id) {
 		mLogger.info("getComments service has Strated()+" + id);
@@ -60,8 +58,7 @@ public class CommentServiceImp implements CommentService {
 
 		return comentsFromDB;
 	}
-	
-	
+
 	@Override
 	public List<Comment> getComments() {
 		mLogger.info("getComments service has Strated()+");
@@ -70,16 +67,15 @@ public class CommentServiceImp implements CommentService {
 		return allComentsFromDB;
 
 	}
-	
+
 	@Override
-	public List<Comment> deleteById(long id){
+	public List<Comment> deleteById(long id) {
 		mLogger.info("deleteById service has Strated()+" + id);
 		List<Comment> commentdelete = commentRepository.deleteById(id);
 		return commentdelete;
 
 	}
-	
-	
+
 	@Override
 	public Comment updateCommenent(long bookId, long commentId, CommentRequestDto commentRequestDto) {
 		mLogger.info("updateCommenent service has Strated()+" + bookId, commentId, commentId);
@@ -102,7 +98,5 @@ public class CommentServiceImp implements CommentService {
 
 		return updateComment;
 	}
-	
-	
-	
+
 }

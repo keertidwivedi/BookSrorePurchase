@@ -43,18 +43,13 @@ public class UserResponseDto {
 	}
 
 	public UserResponseDto(Long id, String name, String email, String password) {
-	
+
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 	}
 
-	
-	
-	
-	
-	
 	public UserResponseDto(String name, String email) {
 		this.name = name;
 		this.email = email;
@@ -67,8 +62,6 @@ public class UserResponseDto {
 	public UserResponseDto(User user) {
 		// TODO Auto-generated constructor stub
 	}
-
-	
 
 	@Override
 	public String toString() {

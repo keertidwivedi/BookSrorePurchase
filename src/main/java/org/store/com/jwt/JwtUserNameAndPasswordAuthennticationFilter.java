@@ -25,18 +25,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
-
-
 public class JwtUserNameAndPasswordAuthennticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final AuthenticationManager authenticationManager;
-	
-	
-	
-	
 
 	public JwtUserNameAndPasswordAuthennticationFilter(AuthenticationManager authenticationManager) {
-		
+
 		this.authenticationManager = authenticationManager;
 	}
 
@@ -51,7 +45,7 @@ public class JwtUserNameAndPasswordAuthennticationFilter extends UsernamePasswor
 			Authentication authentication = new UsernamePasswordAuthenticationToken(authenticationRequest.getUserName(),
 					authenticationRequest.getPassword());
 			Authentication authenticate = authenticationManager.authenticate(authentication);
-			
+
 			return authenticate;
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -80,18 +74,14 @@ public class JwtUserNameAndPasswordAuthennticationFilter extends UsernamePasswor
 		 * ArrayList<>(); authResult.getAuthorities().forEach(a->{
 		 * roles.add(a.getAuthority()); System.out.println(roles); });
 		 */
-	      
+
 		String key = "securesecuresecuresecuresecuresecuresecuresecuresecure";
-	String token =	Jwts.builder()
-		.setSubject(authResult.getName())
-		.claim("authorities", authResult.getAuthorities())
-		
-		.setIssuedAt(new Date())
-		.setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
-		.signWith(Keys.hmacShaKeyFor(key.getBytes()))
-		.compact();
-		response.addHeader("Authorization", "Bearer  "  +token);
-	
+		String token = Jwts.builder().setSubject(authResult.getName()).claim("authorities", authResult.getAuthorities())
+
+				.setIssuedAt(new Date()).setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
+				.signWith(Keys.hmacShaKeyFor(key.getBytes())).compact();
+		response.addHeader("Authorization", "Bearer  " + token);
+
 	}
-	
+
 }

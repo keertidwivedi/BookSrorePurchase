@@ -1,9 +1,9 @@
 package org.store.com.ResponseDto;
 
 public class CommentResponse {
-	
+
 	private long CommentId;
-	
+
 	private String text;
 
 	public long getCommentId() {

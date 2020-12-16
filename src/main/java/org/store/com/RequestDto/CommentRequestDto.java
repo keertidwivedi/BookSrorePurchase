@@ -1,6 +1,5 @@
 package org.store.com.RequestDto;
 
-
 import java.util.Set;
 
 import javax.validation.constraints.Size;
@@ -9,12 +8,10 @@ import org.store.com.model.Book;
 import org.store.com.model.Comment;
 
 public class CommentRequestDto {
-	
-	
-	
+
 	private String text;
-	
-		public String getText() {
+
+	public String getText() {
 		return text;
 	}
 
@@ -27,12 +24,9 @@ public class CommentRequestDto {
 		return "CommentRequestDto [ text=" + text + "]";
 	}
 
-	public CommentRequestDto( String text) {
+	public CommentRequestDto(String text) {
 		super();
 		this.text = text;
 	}
-	
 
-	
-	
 }

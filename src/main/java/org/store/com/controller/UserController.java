@@ -26,16 +26,14 @@ import org.store.com.model.User;
 import org.store.com.repo.UserRepository;
 import org.store.com.service.UserService;
 
-
-
 @RestController
 public class UserController {
 
 	private final Logger mLogger = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -49,47 +47,37 @@ public class UserController {
 	@PostMapping("/user/create/admin")
 	public ResponseEntity<UserResponseDto> createRoleAdmin(@RequestBody UserRequestDto userDto) {
 		mLogger.info("createRoleAdmin Controller createRoleAdmin Start() ");
-		mLogger.debug("Recived User:"+userDto);
+		mLogger.debug("Recived User:" + userDto);
 		UserResponseDto user = userService.createRoleAdmin(userDto);
-		mLogger.debug("adminrole created: "+user);
+		mLogger.debug("adminrole created: " + user);
 		mLogger.info("createRoleAdmin Controller End() ");
 		return ResponseEntity.ok().body(user);
 	}
-	
-	
-	
+
 	@GetMapping("/user/all")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<UserResponseDto>> listAllUsers() {
 		mLogger.info("view all users controller getUser Strat()");
 		List<UserResponseDto> listOfUser = userService.listAllUsers();
-	return ResponseEntity.ok().body(listOfUser) ;	
+		return ResponseEntity.ok().body(listOfUser);
 	}
-	
-	
-	
 
 	@PostMapping("/user/create/user")
 	public ResponseEntity<UserResponseDto> createUserRoleUser(@RequestBody UserRequestDto userDto) {
 		mLogger.info("user role ccontroller createUSerRoleUSer() Strat()");
-		mLogger.debug("Recived User:"+userDto);
+		mLogger.debug("Recived User:" + userDto);
 		UserResponseDto user = userService.createUserRoleUser(userDto);
-		mLogger.debug("user role created: "+user);
+		mLogger.debug("user role created: " + user);
 		mLogger.info("user role ccontroller End()");
 		return ResponseEntity.ok().body(user);
 	}
 
-
-
-
-
-
 	@GetMapping("/admin/role")
 	public ResponseEntity<List<UserResponseDto>> getAdmin() {
 		mLogger.info("view all admin role list controller getAdmin() Strat()");
-		
+
 		List<UserResponseDto> adminUser = userService.getAdmin();
-		mLogger.debug("Recived admin users :"+adminUser);
+		mLogger.debug("Recived admin users :" + adminUser);
 		System.out.println(adminUser);
 		mLogger.info("view all admin role list controller End()");
 		return ResponseEntity.ok().body(adminUser);
@@ -99,17 +87,11 @@ public class UserController {
 	public ResponseEntity<List<UserResponseDto>> getUser() {
 		mLogger.info("view all user role list controller getUser() Strat()");
 		List<UserResponseDto> userRoleUser = userService.getUser();
-		mLogger.debug("Recived user role  users :"+userRoleUser);
+		mLogger.debug("Recived user role  users :" + userRoleUser);
 		mLogger.info("view all user role list controller End()");
 		return ResponseEntity.ok().body(userRoleUser);
 	}
 
-	
-	
-	
-	
-	
-	
 	/*
 	 * @GetMapping("/user/details/{id}") public ResponseEntity<Optional<User>>
 	 * getUserById(@PathVariable long id) {
@@ -118,39 +100,22 @@ public class UserController {
 	 * StoreException("no ser based on id"); } return
 	 * ResponseEntity.ok().body(user); }
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	 
+
 	@DeleteMapping(value = "user/delete/{id}")
 	public ResponseEntity<User> deleteById(@PathVariable("id") long id) {
 		mLogger.info("delete user based on id deleteByID() Strat()");
 		User user = userService.deleteById(id);
-		
-	
+
 		return ResponseEntity.ok().body(user);
 	}
 
+	@PutMapping("user/{id}")
+	public ResponseEntity<User> updateUser(@PathVariable("id") long id, UserRequestDto requestDto) {
 
-	@PutMapping("user/{id}") 
-	public ResponseEntity<User> updateUser(@PathVariable("id") long id,UserRequestDto requestDto) {
+		User UpdateUser = userService.updateUser(id, requestDto);
+		mLogger.debug("Recived updated user based on id updateUSer() :" + UpdateUser);
+		return ResponseEntity.ok().body(UpdateUser);
 
-	User UpdateUser = userService.updateUser(id, requestDto);
-	mLogger.debug("Recived updated user based on id updateUSer() :"+UpdateUser);
-	return ResponseEntity.ok().body(UpdateUser);
-
-}
+	}
 
 }

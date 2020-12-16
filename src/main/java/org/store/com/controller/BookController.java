@@ -28,8 +28,6 @@ import org.store.com.service.BookService;
 public class BookController {
 	private final Logger mLogger = LoggerFactory.getLogger(BookController.class);
 
-	
-
 	@Autowired
 	private BookService bookService;
 

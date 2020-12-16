@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.store.com.Exception.BookNotFoundException;
@@ -21,75 +18,62 @@ import org.store.com.repo.UserRepository;
 @Service
 public class UserServiceImp implements UserService {
 
-	
-	
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
-	@PersistenceContext
-	EntityManager entityManager;
 
 	public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 	}
-	
-	
-	
-	
-	
+
 	@Override
 	public UserResponseDto createRoleAdmin(UserRequestDto userRequestDto) {
-		
-			UserResponseDto userResponseDto = new UserResponseDto();
-			User user = new User();
-			if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
-				throw new BookNotFoundException("Email alreay presnt") ;
 
-				// return userResponseDto;
+		UserResponseDto userResponseDto = new UserResponseDto();
+		User user = new User();
+		if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
+			throw new BookNotFoundException("Email alreay presnt");
+
+			// return userResponseDto;
+
+		} else {
+			user.setEmail(userRequestDto.getEmail());
+			user.setPassword(userRequestDto.getPassword());
+			user.setUserName(userRequestDto.getUserName());
+			// user.setRole(model.getRole());
+
+			Optional<Role> roleOpt = roleRepository.findByName("admin");
+			if (roleOpt.isPresent()) {
+				user.getRole().add(roleOpt.get());
 
 			} else {
-				user.setEmail(userRequestDto.getEmail());
-				user.setPassword(userRequestDto.getPassword());
-				user.setUserName(userRequestDto.getUserName());
-				// user.setRole(model.getRole());
+				Role role = new Role();
+				role.setName("admin");
+				Role savedRole = roleRepository.save(role);
+				System.out.println(savedRole.toString());
+				user.getRole().add(savedRole);
+				System.out.println(user);
 
-				Optional<Role> roleOpt = roleRepository.findByName("admin");
-				if (roleOpt.isPresent()) {
-					user.getRole().add(roleOpt.get());
-
-				} else {
-					Role role = new Role();
-					role.setName("admin");
-					Role savedRole = roleRepository.save(role);
-					System.out.println(savedRole.toString());
-					user.getRole().add(savedRole);
-					System.out.println(user);
-
-				}
-
-				
-				  String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
-				    user.setPassword(encodedPassword);
-				
-				
-				
-				
-				User AdminRoleSaved = userRepository.save(user);
-				userResponseDto.setId(AdminRoleSaved.getId());
-				userResponseDto.setEmail(AdminRoleSaved.getEmail());
-				userResponseDto.setName(AdminRoleSaved.getUserName());
-
-				if (userRepository.findById(AdminRoleSaved.getId()).isPresent()) {
-					System.out.println("Sucessfully created  ");
-				} else {
-					throw new StoreException("Failed Creating User as Specified");
-				}
-				System.out.println(AdminRoleSaved);
-				return userResponseDto;
 			}
 
+			String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+			user.setPassword(encodedPassword);
+
+			User AdminRoleSaved = userRepository.save(user);
+			userResponseDto.setId(AdminRoleSaved.getId());
+			userResponseDto.setEmail(AdminRoleSaved.getEmail());
+			userResponseDto.setName(AdminRoleSaved.getUserName());
+
+			if (userRepository.findById(AdminRoleSaved.getId()).isPresent()) {
+				System.out.println("Sucessfully created  ");
+			} else {
+				throw new StoreException("Failed Creating User as Specified");
+			}
+			System.out.println(AdminRoleSaved);
+			return userResponseDto;
 		}
 
+	}
 
 	@Override
 	public UserResponseDto createUserRoleUser(UserRequestDto userRequestDto) {
@@ -138,7 +122,6 @@ public class UserServiceImp implements UserService {
 		return responseDto;
 
 	}
-
 
 	@Override
 	public List<UserResponseDto> getAdmin() {
@@ -190,7 +173,7 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public User deleteById(long id)  {
+	public User deleteById(long id) {
 
 		if (id < 1) {
 
@@ -202,9 +185,12 @@ public class UserServiceImp implements UserService {
 		return userById;
 
 	}
+	/*
+	 * security pom.xml clean up lombox
+	 */
 
 	@Override
-	public User updateUser(long id, UserRequestDto requestDto){
+	public User updateUser(long id, UserRequestDto requestDto) {
 
 		Optional<User> userFromDBOpt = userRepository.findById(id);
 		if (userFromDBOpt.isEmpty()) {
@@ -220,7 +206,7 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public Optional<User> getUserById(long id){
+	public Optional<User> getUserById(long id) {
 		Optional<User> UsersList = userRepository.findById(id);
 
 		if (UsersList.get().getId() == id) {
@@ -231,23 +217,21 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public List<UserResponseDto> listAllUsers()
-	{
+	public List<UserResponseDto> listAllUsers() {
 		List<UserResponseDto> newArrayListOfUser = new ArrayList<UserResponseDto>();
-	UserResponseDto newUSerREsponseDto;
+		UserResponseDto newUSerREsponseDto;
 
-	List<User> listOfUsers = userRepository.findAll();
+		List<User> listOfUsers = userRepository.findAll();
 
-	for (User user : listOfUsers) {
-		newUSerREsponseDto = new UserResponseDto();
-		newUSerREsponseDto.setId(user.getId());
-		newUSerREsponseDto.setEmail(user.getEmail());
-		newUSerREsponseDto.setName(user.getUserName());
+		for (User user : listOfUsers) {
+			newUSerREsponseDto = new UserResponseDto();
+			newUSerREsponseDto.setId(user.getId());
+			newUSerREsponseDto.setEmail(user.getEmail());
+			newUSerREsponseDto.setName(user.getUserName());
 
-		newArrayListOfUser.add(newUSerREsponseDto);
+			newArrayListOfUser.add(newUSerREsponseDto);
+		}
+		return newArrayListOfUser;
+
 	}
-	return newArrayListOfUser;
-
 }
-}
-

@@ -6,8 +6,6 @@ public class UerNamePasswordAuthenticationRequest {
 	private String userName;
 
 	private String password;
-	
-	
 
 	public UerNamePasswordAuthenticationRequest() {
 

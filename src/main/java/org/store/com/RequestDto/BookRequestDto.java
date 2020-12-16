@@ -9,18 +9,17 @@ import org.store.com.model.Comment;
 
 public class BookRequestDto {
 
-	
 	@NotNull
-	@NotBlank(message =  "BookName is mandatory")
+	@NotBlank(message = "BookName is mandatory")
 
 	private String bookName;
-	
+
 	@NotNull
 	private String author;
-	
+
 	@NotNull
 	private String quantity;
-	
+
 	private Set<Comment> comment;
 
 	public Set<Comment> getComment() {
@@ -54,9 +53,5 @@ public class BookRequestDto {
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
-	
-	
-	
-	
-	
+
 }
