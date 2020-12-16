@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.store.com.Exception.StoreException;
 import org.store.com.RequestDto.BookRequestDto;
-import org.store.com.RequestDto.UserRequestDto;
+import org.store.com.Util.Constants;
 import org.store.com.model.Book;
-import org.store.com.model.User;
-import org.store.com.repo.BookRepository;
 import org.store.com.service.BookService;
 
 @RestController
@@ -31,13 +27,13 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
-	@PostMapping("/book")
+	@PostMapping(path = Constants.CREATE_BOOK_CONTROLLER_ENDPOINT)
 	public Book createBook(@RequestBody Book book) {
 		Book saveBook = bookService.createBook(book);
 		return saveBook;
 	}
 
-	@GetMapping("/book/{bookName}")
+	@GetMapping(path = Constants.GET_BY_BOOK_NAME_CONTROLLER_ENDPOINT)
 	public List<Book> getBookByName(@PathVariable String bookName) {
 		mLogger.info("getBookByNAme Controller has Strated()+" + bookName);
 		List<Book> bookByName = bookService.getBookByName(bookName);
@@ -47,7 +43,7 @@ public class BookController {
 
 	}
 
-	@GetMapping("/books/{id}")
+	@GetMapping(path = Constants.GETBOOK_BY_ID_CONTROLLER_ENDPOINT)
 	public Optional<Book> getBookByd(@PathVariable("id") long bookID) {
 		mLogger.info("getBookByd Controller has Strated()+" + bookID);
 
@@ -58,7 +54,7 @@ public class BookController {
 
 	}
 
-	@DeleteMapping("/book/{id}")
+	@DeleteMapping(path = Constants.DELETE_BOOK_BYID_CONTROLLER_ENDPOINT)
 	public Optional<Book> deleteById(@PathVariable("id") long bookId) {
 		mLogger.info("deleteById Controller has Strated()+" + bookId);
 		Optional<Book> deletedBook = bookService.deleteById(bookId);
@@ -68,7 +64,7 @@ public class BookController {
 		return deletedBook;
 	}
 
-	@PutMapping("/book/{id}")
+	@PutMapping(path = Constants.UPDATE_BOOK_BYID_CONTROLLER_ENDPOINT)
 	public ResponseEntity<Book> updateBook(@PathVariable("id") long id, BookRequestDto requestDto) {
 
 		Book updateBook = bookService.updateBook(id, requestDto);

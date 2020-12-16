@@ -2,16 +2,11 @@
 package org.store.com.controller;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.store.com.Exception.StoreException;
 import org.store.com.RequestDto.UserRequestDto;
 import org.store.com.ResponseDto.UserResponseDto;
+import org.store.com.Util.Constants;
 import org.store.com.model.User;
 import org.store.com.repo.UserRepository;
 import org.store.com.service.UserService;
@@ -44,7 +39,7 @@ public class UserController {
 		this.userRepository = userRepository;
 	}
 
-	@PostMapping("/user/create/admin")
+	@PostMapping(path = Constants.CREATE_A_ROLE_ADMIN_CONTROLLER_ENDPOINT)
 	public ResponseEntity<UserResponseDto> createRoleAdmin(@RequestBody UserRequestDto userDto) {
 		mLogger.info("createRoleAdmin Controller createRoleAdmin Start() ");
 		mLogger.debug("Recived User:" + userDto);
@@ -54,15 +49,14 @@ public class UserController {
 		return ResponseEntity.ok().body(user);
 	}
 
-	@GetMapping("/user/all")
-	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping(path = Constants.LIST_OF_USERS_CONTROLLER_ENDPOINT)
 	public ResponseEntity<List<UserResponseDto>> listAllUsers() {
 		mLogger.info("view all users controller getUser Strat()");
 		List<UserResponseDto> listOfUser = userService.listAllUsers();
 		return ResponseEntity.ok().body(listOfUser);
 	}
 
-	@PostMapping("/user/create/user")
+	@PostMapping(path = Constants.CREATE_A_ROLE_USER_CONTROLLER_ENDPOINT)
 	public ResponseEntity<UserResponseDto> createUserRoleUser(@RequestBody UserRequestDto userDto) {
 		mLogger.info("user role ccontroller createUSerRoleUSer() Strat()");
 		mLogger.debug("Recived User:" + userDto);
@@ -72,7 +66,7 @@ public class UserController {
 		return ResponseEntity.ok().body(user);
 	}
 
-	@GetMapping("/admin/role")
+	@GetMapping(path = Constants.LIST_OF_ADMINS_CONTROLLER_ENDPOINT)
 	public ResponseEntity<List<UserResponseDto>> getAdmin() {
 		mLogger.info("view all admin role list controller getAdmin() Strat()");
 
@@ -83,7 +77,7 @@ public class UserController {
 		return ResponseEntity.ok().body(adminUser);
 	}
 
-	@GetMapping("/user/role")
+	@GetMapping(path = Constants.LIST_OF_USER_ROLE_CONTROLLER_ENDPOINT)
 	public ResponseEntity<List<UserResponseDto>> getUser() {
 		mLogger.info("view all user role list controller getUser() Strat()");
 		List<UserResponseDto> userRoleUser = userService.getUser();
@@ -101,7 +95,7 @@ public class UserController {
 	 * ResponseEntity.ok().body(user); }
 	 */
 
-	@DeleteMapping(value = "user/delete/{id}")
+	@DeleteMapping(path = Constants.DELETE_CONTROLLER_ENDPOINT)
 	public ResponseEntity<User> deleteById(@PathVariable("id") long id) {
 		mLogger.info("delete user based on id deleteByID() Strat()");
 		User user = userService.deleteById(id);
@@ -109,7 +103,7 @@ public class UserController {
 		return ResponseEntity.ok().body(user);
 	}
 
-	@PutMapping("user/{id}")
+	@PutMapping(path = Constants.UPDATE_CONTROLLER_ENDPOINT)
 	public ResponseEntity<User> updateUser(@PathVariable("id") long id, UserRequestDto requestDto) {
 
 		User UpdateUser = userService.updateUser(id, requestDto);

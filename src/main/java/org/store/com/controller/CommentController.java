@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.store.com.RequestDto.BookRequestDto;
 import org.store.com.RequestDto.CommentRequestDto;
+import org.store.com.Util.Constants;
 import org.store.com.model.Book;
 import org.store.com.model.Comment;
 import org.store.com.repo.BookRepository;
@@ -33,7 +34,7 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 
-	@PostMapping("/comments/{id}")
+	@PostMapping(path = Constants.CREATE_COMMENT_CONTROLLER_ENDPOINT)
 	public Comment createComments(@PathVariable("id") long id, @RequestBody CommentRequestDto commentRequestDto) {
 		mLogger.info("createComments Controller has Strated()+" + id + commentRequestDto);
 		Comment saveBook = commentService.createComments(id, commentRequestDto);
@@ -41,7 +42,7 @@ public class CommentController {
 		return saveBook;
 	}
 
-	@GetMapping("/comment/{id}")
+	@GetMapping(path = Constants.GETBYID_COMMENTS_CONTROLLER_ENDPOINT)
 	public List<Comment> getComments(@PathVariable("id") long id) {
 		mLogger.info("getComments Controller has Strated()+" + id);
 		List<Comment> Comments = commentService.getComments(id);
@@ -49,7 +50,7 @@ public class CommentController {
 		return Comments;
 	}
 
-	@GetMapping("/comments")
+	@GetMapping(path = Constants.GETALL_COMMENTS_CONTROLLER_ENDPOINT)
 	public List<Comment> getAllComments() {
 		mLogger.info("getAllComments Controller has Strated()+");
 		List<Comment> comments = commentService.getComments();
@@ -57,7 +58,7 @@ public class CommentController {
 		return comments;
 	}
 
-	@DeleteMapping("/comments/{id}")
+	@DeleteMapping(path = Constants.DELETEBYID_COMMENTS_CONTROLLER_ENDPOINT)
 	public List<Comment> deleteById(@PathVariable("id") long id) {
 		mLogger.info("deleteById Controller has Strated()+" + id);
 		List<Comment> deletedComments = commentService.deleteById(id);
@@ -65,7 +66,7 @@ public class CommentController {
 		return deletedComments;
 	}
 
-	@DeleteMapping("/book/{bookId}/commenet/{commentId}")
+	@DeleteMapping(path = Constants.UPDATE_COMMENTS_CONTROLLER_ENDPOINT)
 	public Comment updateComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId,
 			CommentRequestDto commentRequestDto) {
 		mLogger.info("updateComment Controller has ended()+" + bookId);
