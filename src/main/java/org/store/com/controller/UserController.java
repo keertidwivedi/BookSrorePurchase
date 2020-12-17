@@ -29,14 +29,15 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private UserRepository userRepository;
+	
+	//private UserRepository userRepository;
 
 	UserResponseDto dto;
 
-	public UserController(UserService userService, UserRepository userRepository) {
+	public UserController(UserService userService)//, UserRepository userRepository) 
+	{
 		this.userService = userService;
-		this.userRepository = userRepository;
+		//this.userRepository = userRepository;
 	}
 
 	@PostMapping(path = Constants.CREATE_A_ROLE_ADMIN_CONTROLLER_ENDPOINT)

@@ -17,8 +17,9 @@ import org.store.com.repo.UserRepository;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-	@Autowired
-	UserRepository userRepository;
+	
+	  UserRepository userRepository;
+	 
 
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;

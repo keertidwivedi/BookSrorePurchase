@@ -7,6 +7,11 @@ import javax.validation.constraints.NotNull;
 
 import org.store.com.model.Comment;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class BookRequestDto {
 
 	@NotNull
@@ -22,36 +27,7 @@ public class BookRequestDto {
 
 	private Set<Comment> comment;
 
-	public Set<Comment> getComment() {
-		return comment;
-	}
-
-	public void setComment(Set<Comment> comment) {
-		this.comment = comment;
-	}
-
-	public String getBookName() {
-		return bookName;
-	}
-
-	public void setBookName(String bookName) {
-		this.bookName = bookName;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
+	
+	
 
 }

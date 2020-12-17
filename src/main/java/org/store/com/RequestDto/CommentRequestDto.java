@@ -2,22 +2,22 @@ package org.store.com.RequestDto;
 
 import java.util.Set;
 
+
 import javax.validation.constraints.Size;
 
 import org.store.com.model.Book;
 import org.store.com.model.Comment;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CommentRequestDto {
 
 	private String text;
 
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
+	
 
 	@Override
 	public String toString() {

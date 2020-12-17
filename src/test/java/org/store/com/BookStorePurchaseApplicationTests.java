@@ -25,8 +25,10 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.store.com.RequestDto.UserRequestDto;
 import org.store.com.ResponseDto.UserResponseDto;
+import org.store.com.Util.Constants;
 import org.store.com.controller.UserController;
 import org.store.com.model.User;
+import org.store.com.service.MyUserDetailsService;
 import org.store.com.service.UserService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,15 +48,17 @@ class BookStorePurchaseApplicationTests {
 	@MockBean
 	UserService userService; 
 
-	
+	@MockBean
+	private MyUserDetailsService myUserDetailsService;
 
 	User userTest;
 
+	private String URI;
 	String InputInJson;
 
 	@BeforeEach
 	void setUp() throws JsonProcessingException {
-
+		 URI = Constants.CREATE_A_ROLE_ADMIN_CONTROLLER_ENDPOINT;
 		UserRequestDto requestDto = new UserRequestDto("user1", "user@1", "userpass");
 		userTest = new User();
 		userTest.setUserName("user1");
@@ -68,8 +72,10 @@ class BookStorePurchaseApplicationTests {
 	@Test
 	public void testCreateUser() throws Exception {
 
-		String URI = "/user/create/admin";
+		
 
+		
+		
 		UserResponseDto userResponseDto = new UserResponseDto("user1", "user@gmail");
 
 		String expectedOutputInJsn = mapToJson(userResponseDto);
@@ -83,7 +89,7 @@ class BookStorePurchaseApplicationTests {
 
 		String outputInJson = response.getContentAsString();
 
-		assertThat(outputInJson).isEqualTo(InputInJson);
+		assertThat(outputInJson).isEqualTo(expectedOutputInJsn);
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 	

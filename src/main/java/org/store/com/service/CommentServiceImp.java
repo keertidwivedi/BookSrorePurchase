@@ -18,9 +18,9 @@ import org.store.com.repo.CommentRepository;
 public class CommentServiceImp implements CommentService {
 
 	private final Logger mLogger = LoggerFactory.getLogger(CommentService.class);
-	@Autowired
+
 	CommentRepository commentRepository;
-	@Autowired
+
 	BookRepository bookRepository;
 
 	@Override
