@@ -1,3 +1,4 @@
+
 package org.store.com.service;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.store.com.Exception.BookNotFoundException;
 import org.store.com.RequestDto.CommentRequestDto;
+import org.store.com.ResponseDto.BookResponseDto;
+import org.store.com.ResponseDto.CommentResponseDto;
 import org.store.com.model.Book;
 import org.store.com.model.Comment;
 import org.store.com.repo.BookRepository;
@@ -24,24 +27,23 @@ public class CommentServiceImp implements CommentService {
 	BookRepository bookRepository;
 
 	@Override
-	public Comment createComments(long id, CommentRequestDto commentRequestDto) {
+	public CommentResponseDto createComments(long id, CommentRequestDto commentRequestDto) {
 		mLogger.info("createComments service has Strated()+" + id, commentRequestDto);
-		Optional<Book> idFoundDB = bookRepository.findById(id);
+		Optional<BookResponseDto> idFoundDB = bookRepository.findById(id);
 		mLogger.info("Book dound for following id " + idFoundDB);
 
 		if (idFoundDB.isPresent()) {
 
-			Book book = idFoundDB.get();
+			BookResponseDto book = idFoundDB.get();
 
 			// List<Book> newBook = new ArrayList<Book>();
 
 			mLogger.info("book record from DB" + book);
 			mLogger.info(" Comment" + commentRequestDto);
 
-			Comment comment = new Comment();
-			comment.setText(commentRequestDto.getText());
-			comment.setBook(book);
-			Comment aveComment = commentRepository.save(comment);
+			CommentResponseDto comment = new CommentResponseDto();
+			comment.setText(commentRequestDto.getText()); // comment.setBook(book);
+			CommentResponseDto aveComment = commentRepository.save(comment);
 
 			return aveComment;
 		} else
@@ -51,9 +53,9 @@ public class CommentServiceImp implements CommentService {
 	}
 
 	@Override
-	public List<Comment> getComments(long id) {
+	public List<CommentResponseDto> getComments(long id) {
 		mLogger.info("getComments service has Strated()+" + id);
-		List<Comment> comentsFromDB = commentRepository.findIdById(id);
+		List<CommentResponseDto> comentsFromDB = commentRepository.findIdById(id);
 		mLogger.info("Command found in DB " + comentsFromDB);
 
 		return comentsFromDB;
@@ -69,32 +71,32 @@ public class CommentServiceImp implements CommentService {
 	}
 
 	@Override
-	public List<Comment> deleteById(long id) {
+	public List<CommentResponseDto> deleteById(long id) {
 		mLogger.info("deleteById service has Strated()+" + id);
-		List<Comment> commentdelete = commentRepository.deleteById(id);
+		List<CommentResponseDto> commentdelete = commentRepository.deleteById(id);
 		return commentdelete;
 
 	}
 
 	@Override
-	public Comment updateCommenent(long bookId, long commentId, CommentRequestDto commentRequestDto) {
+	public CommentResponseDto updateCommenent(long bookId, long commentId, CommentRequestDto commentRequestDto) {
 		mLogger.info("updateCommenent service has Strated()+" + bookId, commentId, commentId);
 
-		Optional<Book> foundBookByIdInDB = bookRepository.findById(bookId);
+		Optional<BookResponseDto> foundBookByIdInDB = bookRepository.findById(bookId);
 
-		Book bookRecordFromDB = foundBookByIdInDB.get();
+		BookResponseDto bookRecordFromDB = foundBookByIdInDB.get();
 
 		if (foundBookByIdInDB.isEmpty()) {
 			throw new BookNotFoundException("Book not found based  on Id");
 		}
 
-		Optional<Comment> foundCommentByIdInDB = commentRepository.findById(commentId);
+		Optional<CommentResponseDto> foundCommentByIdInDB = commentRepository.findById(commentId);
 
-		Comment fetchedFromDB = foundCommentByIdInDB.get();
+		CommentResponseDto fetchedFromDB = foundCommentByIdInDB.get();
 
 		fetchedFromDB.setText(commentRequestDto.getText());
 
-		Comment updateComment = commentRepository.save(fetchedFromDB);
+		CommentResponseDto updateComment = commentRepository.save(fetchedFromDB);
 
 		return updateComment;
 	}

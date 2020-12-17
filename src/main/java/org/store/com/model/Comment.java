@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.store.com.ResponseDto.BookResponseDto;
 
 import com.sun.istack.NotNull;
 
@@ -42,5 +43,7 @@ public class Comment {
 		this.text = text;
 		this.book = book;
 	}
+
+	
 
 }

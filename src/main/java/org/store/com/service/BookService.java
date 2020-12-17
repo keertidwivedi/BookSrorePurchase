@@ -4,18 +4,23 @@ import java.util.List;
 import java.util.Optional;
 
 import org.store.com.RequestDto.BookRequestDto;
+import org.store.com.ResponseDto.BookResponseDto;
 import org.store.com.model.Book;
 
 public interface BookService {
 
 	// Create/add a Book
-	Book createBook(Book book);
+	BookResponseDto createBook(BookRequestDto bookRequestDto);
 
-	List<Book> getBookByName(String bookName);
+	List<BookResponseDto> getBookByName(BookRequestDto bookRequestDto);
 
-	Optional<Book> getBookById(long bookID);
+	Optional<BookResponseDto> getBookById(long bookId);
 
 	Optional<Book> deleteById(long bookId);
 
-	Book updateBook(long id, BookRequestDto requestDto);
+	BookResponseDto updateBook(long id, BookRequestDto requestDto);
+
+	
+
+	
 }

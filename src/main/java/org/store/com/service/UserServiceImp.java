@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.store.com.Exception.BookNotFoundException;
 import org.store.com.Exception.StoreException;
 import org.store.com.RequestDto.UserRequestDto;
 import org.store.com.ResponseDto.UserResponseDto;
+import org.store.com.controller.UserController;
 import org.store.com.model.Role;
 import org.store.com.model.User;
 import org.store.com.repo.RoleRepository;
@@ -17,13 +20,21 @@ import org.store.com.repo.UserRepository;
 
 @Service
 public class UserServiceImp implements UserService {
+	
+	private final Logger mLogger = LoggerFactory.getLogger(UserServiceImp.class);
 
 	private UserRepository userRepository;
+
 	private RoleRepository roleRepository;
 
+	
 	public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
+	}
+
+	public UserServiceImp() {
+
 	}
 
 	@Override
@@ -173,14 +184,14 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public User deleteById(long id) {
+	public UserResponseDto deleteById(long id) {
 
 		if (id < 1) {
 
 			throw new NullPointerException("id is not present");
 		}
 
-		User userById = userRepository.deleteById(id);
+		UserResponseDto userById = userRepository.deleteById(id);
 
 		return userById;
 
@@ -190,24 +201,24 @@ public class UserServiceImp implements UserService {
 	 */
 
 	@Override
-	public User updateUser(long id, UserRequestDto requestDto) {
+	public UserResponseDto updateUser(long id, UserRequestDto requestDto) {
 
-		Optional<User> userFromDBOpt = userRepository.findById(id);
+		Optional<UserResponseDto> userFromDBOpt = userRepository.findById(id);
 		if (userFromDBOpt.isEmpty()) {
 			throw new StoreException("User Not FOund Based On ID");
 		}
-		User updateUser = userFromDBOpt.get();
-		updateUser.setUserName(requestDto.getUserName());
+		UserResponseDto updateUser = userFromDBOpt.get();
+		updateUser.setName(requestDto.getUserName());
 		updateUser.setEmail(requestDto.getEmail());
 
-		User updatedUser = userRepository.save(updateUser);
+		UserResponseDto updatedUser = userRepository.save(updateUser);
 		return updatedUser;
 
 	}
 
 	@Override
-	public Optional<User> getUserById(long id) {
-		Optional<User> UsersList = userRepository.findById(id);
+	public Optional<UserResponseDto> getUserById(long id) {
+		Optional<UserResponseDto> UsersList = userRepository.findById(id);
 
 		if (UsersList.get().getId() == id) {
 			return UsersList;
@@ -218,10 +229,14 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public List<UserResponseDto> listAllUsers() {
+		mLogger.info("listAllUsers serviceImp has Start() ");
 		List<UserResponseDto> newArrayListOfUser = new ArrayList<UserResponseDto>();
 		UserResponseDto newUSerREsponseDto;
 
 		List<User> listOfUsers = userRepository.findAll();
+		System.out.println(listOfUsers);
+		
+		mLogger.info("listodUsers searched in database "+listOfUsers);
 
 		for (User user : listOfUsers) {
 			newUSerREsponseDto = new UserResponseDto();

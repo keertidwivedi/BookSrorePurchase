@@ -28,16 +28,16 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	private UserController userController;
 
 	
-	//private UserRepository userRepository;
-
 	UserResponseDto dto;
 
-	public UserController(UserService userService)//, UserRepository userRepository) 
+	public UserController(UserService userService) 
 	{
 		this.userService = userService;
-		//this.userRepository = userRepository;
+		
 	}
 
 	@PostMapping(path = Constants.CREATE_A_ROLE_ADMIN_CONTROLLER_ENDPOINT)
@@ -54,6 +54,7 @@ public class UserController {
 	public ResponseEntity<List<UserResponseDto>> listAllUsers() {
 		mLogger.info("view all users controller getUser Strat()");
 		List<UserResponseDto> listOfUser = userService.listAllUsers();
+		mLogger.info("view all users controller getUser ended()");
 		return ResponseEntity.ok().body(listOfUser);
 	}
 
@@ -97,17 +98,17 @@ public class UserController {
 	 */
 
 	@DeleteMapping(path = Constants.DELETE_CONTROLLER_ENDPOINT)
-	public ResponseEntity<User> deleteById(@PathVariable("id") long id) {
+	public ResponseEntity<UserResponseDto> deleteById(@PathVariable("id") long id) {
 		mLogger.info("delete user based on id deleteByID() Strat()");
-		User user = userService.deleteById(id);
+		UserResponseDto user = userService.deleteById(id);
 
 		return ResponseEntity.ok().body(user);
 	}
 
 	@PutMapping(path = Constants.UPDATE_CONTROLLER_ENDPOINT)
-	public ResponseEntity<User> updateUser(@PathVariable("id") long id, UserRequestDto requestDto) {
+	public ResponseEntity<UserResponseDto> updateUser(@PathVariable("id") long id, UserRequestDto requestDto) {
 
-		User UpdateUser = userService.updateUser(id, requestDto);
+		UserResponseDto UpdateUser = userService.updateUser(id, requestDto);
 		mLogger.debug("Recived updated user based on id updateUSer() :" + UpdateUser);
 		return ResponseEntity.ok().body(UpdateUser);
 

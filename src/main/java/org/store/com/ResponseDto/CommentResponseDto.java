@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CommentResponse {
+public class CommentResponseDto {
 
 	private long CommentId;
 
@@ -15,7 +15,7 @@ public class CommentResponse {
 
 
 
-	public CommentResponse(long commentId, String text) {
+	public CommentResponseDto(long commentId, String text) {
 		super();
 		CommentId = commentId;
 		this.text = text;

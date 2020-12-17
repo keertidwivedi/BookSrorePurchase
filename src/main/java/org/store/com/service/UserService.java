@@ -18,11 +18,11 @@ public interface UserService {
 
 	List<UserResponseDto> getUser();
 
-	User deleteById(long id);
+	UserResponseDto deleteById(long id);
 
-	User updateUser(long id, UserRequestDto requestDto);
+	UserResponseDto updateUser(long id, UserRequestDto requestDto);
 
-	Optional<User> getUserById(long id);
+	Optional<UserResponseDto> getUserById(long id);
 
 	List<UserResponseDto> listAllUsers();
 
