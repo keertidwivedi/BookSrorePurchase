@@ -93,59 +93,62 @@ public class BookControllerTest {
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 
-	@Test
-	public void testBookByName() throws Exception {
-		String URI = Constants.GET_BY_BOOK_NAME_CONTROLLER_ENDPOINT;
+	/*
+	 * @Test public void testBookByName() throws Exception { String URI =
+	 * Constants.GET_BY_BOOK_NAME_CONTROLLER_ENDPOINT;
+	 * 
+	 * List<BookResponseDto> bookResponseDtoList = new ArrayList<BookResponseDto>();
+	 * 
+	 * newBookResponseDto = new BookResponseDto();
+	 * newBookResponseDto.setBookName(bookTest.getBookName());
+	 * newBookResponseDto.setBookAuthor(bookTest.getAuthor());
+	 * bookResponseDtoList.add(newBookResponseDto);
+	 * 
+	 * String expectedOutputInJsn = mapToJson(bookResponseDtoList);
+	 * 
+	 * Mockito.when(bookService.getBookByName(Mockito.any(BookRequestDto.class))).
+	 * thenReturn(bookResponseDtoList); System.out.println("**************");
+	 * 
+	 * RequestBuilder requestBuilder =
+	 * MockMvcRequestBuilders.get(URI).accept(MediaType.APPLICATION_JSON); //
+	 * .content(inputJson).contentType(MediaType.APPLICATION_JSON);
+	 * 
+	 * MvcResult result = mockMvc.perform(requestBuilder).andReturn();// controller
+	 * call MockHttpServletResponse response = result.getResponse();
+	 * System.out.println(result.getResponse());
+	 * 
+	 * String outputInJson = response.getContentAsString();
+	 * 
+	 * assertThat(outputInJson).isEqualTo(expectedOutputInJsn);
+	 * assertEquals(HttpStatus.OK.value(), response.getStatus()); }
+	 */
 
-		List<BookResponseDto> bookResponseDtoList = new ArrayList<BookResponseDto>();
-
-		newBookResponseDto = new BookResponseDto();
-		newBookResponseDto.setBookName(bookTest.getBookName());
-		newBookResponseDto.setBookAuthor(bookTest.getAuthor());
-		bookResponseDtoList.add(newBookResponseDto);
-
-		String expectedOutputInJsn = mapToJson(bookResponseDtoList);
-
-		Mockito.when(bookService.getBookByName(Mockito.any(BookRequestDto.class))).thenReturn(bookResponseDtoList);
-		System.out.println("**************");
-
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(URI).accept(MediaType.APPLICATION_JSON);
-		// .content(inputJson).contentType(MediaType.APPLICATION_JSON);
-
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();// controller call
-		MockHttpServletResponse response = result.getResponse();
-		System.out.println(result.getResponse());
-
-		String outputInJson = response.getContentAsString();
-
-		assertThat(outputInJson).isEqualTo(expectedOutputInJsn);
-		assertEquals(HttpStatus.OK.value(), response.getStatus());
-	}
-
-	@Test
-	public void testBookById() throws Exception {
-		URI = Constants.GETBOOK_BY_ID_CONTROLLER_ENDPOINT;
-
-		Optional<BookResponseDto> bookResponseDto;
-
-		String expectedOutputInJsn = mapToJson(bookResponseDtoopt);
-
-		Mockito.when(bookService.getBookById(Mockito.any(BookRequestDto.class))).thenReturn(bookResponseDtoopt);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(URI).accept(MediaType.APPLICATION_JSON)
-				.content(inputJson).contentType(MediaType.APPLICATION_JSON);
-
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-		MockHttpServletResponse response = result.getResponse();
-
-		String outputInJson = response.getContentAsString();
-
-		assertThat(outputInJson).isEqualTo(expectedOutputInJsn);
-		assertEquals(HttpStatus.OK.value(), response.getStatus());
-	}
-
-	private String mapToJson(Object object) throws JsonProcessingException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.writeValueAsString(object);
-	}
+	
+	/*
+	 * @Test public void testBookById() throws Exception { URI =
+	 * Constants.GETBOOK_BY_ID_CONTROLLER_ENDPOINT;
+	 * 
+	 * Optional<BookResponseDto> bookResponseDto;
+	 * 
+	 * String expectedOutputInJsn = mapToJson(bookResponseDtoopt);
+	 * 
+	 * Mockito.when(bookService.getBookById(Mockito.any(BookRequestDto.class))).
+	 * thenReturn(bookResponseDtoopt); RequestBuilder requestBuilder =
+	 * MockMvcRequestBuilders.post(URI).accept(MediaType.APPLICATION_JSON)
+	 * .content(inputJson).contentType(MediaType.APPLICATION_JSON);
+	 * 
+	 * MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+	 * MockHttpServletResponse response = result.getResponse();
+	 * 
+	 * String outputInJson = response.getContentAsString();
+	 * 
+	 * assertThat(outputInJson).isEqualTo(expectedOutputInJsn);
+	 * assertEquals(HttpStatus.OK.value(), response.getStatus()); }
+	 */
+	  
+	  private String mapToJson(Object object) throws JsonProcessingException {
+	  ObjectMapper objectMapper = new ObjectMapper(); return
+	  objectMapper.writeValueAsString(object); }
+	 
 
 }

@@ -35,17 +35,17 @@ public class BookController {
 
 	@PostMapping(path = Constants.CREATE_BOOK_CONTROLLER_ENDPOINT)
 	public BookResponseDto createBook(@RequestBody BookRequestDto book) {
+		mLogger.info("createBook Controller has Strated() , Recived book value+ " + book);
 		BookResponseDto saveBook = bookService.createBook(book);
+		mLogger.info("createBook Controller has Ended();");
 		return saveBook;
 	}
 
-	// Book createBook(BookRequestDto bookRequestDto);
-
 	@GetMapping(path = Constants.GET_BY_BOOK_NAME_CONTROLLER_ENDPOINT)
-	public List<BookResponseDto> getBookByName(@PathVariable BookRequestDto  BookRequestDto) {
-		mLogger.info("getBookByNAme Controller has Strated()+" + BookRequestDto);
-		List<BookResponseDto> bookByName = bookService.getBookByName(BookRequestDto);
-		mLogger.info("Recieved bookbyname" + BookRequestDto);
+	public List<BookResponseDto> getBookByName(@PathVariable String bookName) {
+		mLogger.info("getBookByNAme Controller has Strated() , Recived book value+ " + bookName);
+		List<BookResponseDto> bookByName = bookService.getBookByName(bookName);
+		mLogger.info("Recieved bookbyname" + bookByName);
 		mLogger.info("getBookByNAme Controller has Ended();");
 		return bookByName;
 
@@ -53,7 +53,7 @@ public class BookController {
 
 	@GetMapping(path = Constants.GETBOOK_BY_ID_CONTROLLER_ENDPOINT)
 	public Optional<BookResponseDto> getBookById(@PathVariable("id") long bookId) {
-		mLogger.info("getBookByd Controller has Strated()+" + bookId);
+		mLogger.info("getBookByd Controller has Strated(),recived " + bookId);
 
 		Optional<BookResponseDto> bookBasedOnId = bookService.getBookById(bookId);
 		mLogger.info("Recieved bookbyname" + bookBasedOnId);
@@ -64,7 +64,7 @@ public class BookController {
 
 	@DeleteMapping(path = Constants.DELETE_BOOK_BYID_CONTROLLER_ENDPOINT)
 	public Optional<Book> deleteById(@PathVariable("id") long bookId) {
-		mLogger.info("deleteById Controller has Strated()+" + bookId);
+		mLogger.info("deleteById Controller has Strated()+ book id 	recieved" + bookId);
 		Optional<Book> deletedBook = bookService.deleteById(bookId);
 
 		mLogger.info("deleted bookbyid" + deletedBook);
@@ -73,9 +73,9 @@ public class BookController {
 	}
 
 	@PutMapping(path = Constants.UPDATE_BOOK_BYID_CONTROLLER_ENDPOINT)
-	public ResponseEntity<BookResponseDto> updateBook(@PathVariable("id") long id, BookRequestDto requestDto) {
-
-		BookResponseDto updateBook = bookService.updateBook(id, requestDto);
+	public ResponseEntity<BookResponseDto> updateBook(@PathVariable("bookId") long bookId, BookRequestDto requestDto) {
+		mLogger.info("updateBook Controller has Strated()+ book id 	recieved" + bookId);
+		BookResponseDto updateBook = bookService.updateBook(bookId, requestDto);
 		mLogger.debug("Recived updated book based on id updateUSer() :" + updateBook);
 		return ResponseEntity.ok().body(updateBook);
 	}

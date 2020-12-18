@@ -12,25 +12,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class BookResponseDto {
-	
+
+	String bookName;
+
+	String bookAuthor;
+
+	String quantity;
+
+	Set<Comment> comment;
+
 	public BookResponseDto(String bookName, String bookAuthor, String quantity) {
-		
+
 		this.bookName = bookName;
 		this.bookAuthor = bookAuthor;
 		this.quantity = quantity;
 	}
-
-	String bookName;
-	
-	String bookAuthor;
-	
-	String quantity;
-	
- Set<Comment> comment;
-
-	
-	
-	
-	
 
 }

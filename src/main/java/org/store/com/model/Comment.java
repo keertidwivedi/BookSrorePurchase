@@ -44,6 +44,4 @@ public class Comment {
 		this.book = book;
 	}
 
-	
-
 }

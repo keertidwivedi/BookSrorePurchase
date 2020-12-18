@@ -13,15 +13,11 @@ public class CommentResponseDto {
 
 	private String text;
 
-
-
 	public CommentResponseDto(long commentId, String text) {
 		super();
 		CommentId = commentId;
 		this.text = text;
 	}
-
-	
 
 	@Override
 	public String toString() {

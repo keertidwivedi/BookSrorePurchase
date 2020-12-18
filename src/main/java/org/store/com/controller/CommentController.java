@@ -34,17 +34,17 @@ public class CommentController {
 	private CommentService commentService;
 
 	@PostMapping(path = Constants.CREATE_COMMENT_CONTROLLER_ENDPOINT)
-	public CommentResponseDto createComments(@PathVariable("id") long id, @RequestBody CommentRequestDto commentRequestDto) {
-		mLogger.info("createComments Controller has Strated()+" + id + commentRequestDto);
-		CommentResponseDto saveBook = commentService.createComments(id, commentRequestDto);
-		mLogger.info("createComments Controller has ended()+" + id);
+	public CommentResponseDto createComments(@PathVariable("id") long commentId, @RequestBody CommentRequestDto commentRequestDto) {
+		mLogger.info("createComments Controller has Strated()+ recieved" + commentId + commentRequestDto);
+		CommentResponseDto saveBook = commentService.createComments(commentId, commentRequestDto);
+		mLogger.info("createComments Controller has ended()+" + commentId);
 		return saveBook;
 	}
 
 	@GetMapping(path = Constants.GETBYID_COMMENTS_CONTROLLER_ENDPOINT)
-	public List<CommentResponseDto> getComments(@PathVariable("id") long id) {
-		mLogger.info("getComments Controller has Strated()+" + id);
-		List<CommentResponseDto> Comments = commentService.getComments(id);
+	public List<CommentResponseDto> getComments(@PathVariable("id") long commentId) {
+		mLogger.info("getComments Controller has Strated() recieved+" + commentId);
+		List<CommentResponseDto> Comments = commentService.getComments(commentId);
 		mLogger.info("getComments Controller has ended()+" + Comments);
 		return Comments;
 	}
@@ -58,9 +58,9 @@ public class CommentController {
 	}
 
 	@DeleteMapping(path = Constants.DELETEBYID_COMMENTS_CONTROLLER_ENDPOINT)
-	public List<CommentResponseDto> deleteById(@PathVariable("id") long id) {
-		mLogger.info("deleteById Controller has Strated()+" + id);
-		List<CommentResponseDto> deletedComments = commentService.deleteById(id);
+	public List<CommentResponseDto> deleteById(@PathVariable("id") long commentId) {
+		mLogger.info("deleteById Controller has Strated() recieved commentid+" + commentId);
+		List<CommentResponseDto> deletedComments = commentService.deleteById(commentId);
 		mLogger.info("deleteById Controller has ended()+" + deletedComments);
 		return deletedComments;
 	}
@@ -75,13 +75,5 @@ public class CommentController {
 
 	}
 
-	/*
-	 * @GetMapping("/book/{bookId}/Comment/{commentId}") public Comment
-	 * getCommentById(@PathVariable("bookId") long
-	 * bookId, @PathVariable("commentId") long commentId, CommentRequestDto
-	 * commentRequestDto) { Comment BookandCommentId =
-	 * commentService.getCommentByID(bookId, commentId, commentRequestDto);
-	 * 
-	 * return BookandCommentId; }
-	 */
+	
 }

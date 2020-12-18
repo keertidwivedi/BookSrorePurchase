@@ -29,8 +29,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	private UserController userController;
-
 	
 	UserResponseDto dto;
 
@@ -54,6 +52,7 @@ public class UserController {
 	public ResponseEntity<List<UserResponseDto>> listAllUsers() {
 		mLogger.info("view all users controller getUser Strat()");
 		List<UserResponseDto> listOfUser = userService.listAllUsers();
+		mLogger.info("recieved losy of users"+listOfUser);
 		mLogger.info("view all users controller getUser ended()");
 		return ResponseEntity.ok().body(listOfUser);
 	}
@@ -62,10 +61,10 @@ public class UserController {
 	public ResponseEntity<UserResponseDto> createUserRoleUser(@RequestBody UserRequestDto userDto) {
 		mLogger.info("user role ccontroller createUSerRoleUSer() Strat()");
 		mLogger.debug("Recived User:" + userDto);
-		UserResponseDto user = userService.createUserRoleUser(userDto);
-		mLogger.debug("user role created: " + user);
+		UserResponseDto newUserResponseDto = userService.createUserRoleUser(userDto);
+		mLogger.debug("user role created: " + newUserResponseDto);
 		mLogger.info("user role ccontroller End()");
-		return ResponseEntity.ok().body(user);
+		return ResponseEntity.ok().body(newUserResponseDto);
 	}
 
 	@GetMapping(path = Constants.LIST_OF_ADMINS_CONTROLLER_ENDPOINT)
@@ -82,33 +81,25 @@ public class UserController {
 	@GetMapping(path = Constants.LIST_OF_USER_ROLE_CONTROLLER_ENDPOINT)
 	public ResponseEntity<List<UserResponseDto>> getUser() {
 		mLogger.info("view all user role list controller getUser() Strat()");
-		List<UserResponseDto> userRoleUser = userService.getUser();
-		mLogger.debug("Recived user role  users :" + userRoleUser);
+		List<UserResponseDto> allRoleUser = userService.getUser();
+		mLogger.debug("Recived user role  users :" + allRoleUser);
 		mLogger.info("view all user role list controller End()");
-		return ResponseEntity.ok().body(userRoleUser);
+		return ResponseEntity.ok().body(allRoleUser);
 	}
 
-	/*
-	 * @GetMapping("/user/details/{id}") public ResponseEntity<Optional<User>>
-	 * getUserById(@PathVariable long id) {
-	 * mLogger.info("view user details based on ID controller getUser() Strat()");
-	 * List<User> user = userService.getUserById(id); if (user == null) { throw new
-	 * StoreException("no ser based on id"); } return
-	 * ResponseEntity.ok().body(user); }
-	 */
 
 	@DeleteMapping(path = Constants.DELETE_CONTROLLER_ENDPOINT)
-	public ResponseEntity<UserResponseDto> deleteById(@PathVariable("id") long id) {
+	public ResponseEntity<UserResponseDto> deleteById(@PathVariable("id") long userId) {
 		mLogger.info("delete user based on id deleteByID() Strat()");
-		UserResponseDto user = userService.deleteById(id);
-
-		return ResponseEntity.ok().body(user);
+		UserResponseDto userResponseDto = userService.deleteById(userId);
+		mLogger.info("delete user based on id deleteByID() has ended");
+		return ResponseEntity.ok().body(userResponseDto);
 	}
 
 	@PutMapping(path = Constants.UPDATE_CONTROLLER_ENDPOINT)
-	public ResponseEntity<UserResponseDto> updateUser(@PathVariable("id") long id, UserRequestDto requestDto) {
-
-		UserResponseDto UpdateUser = userService.updateUser(id, requestDto);
+	public ResponseEntity<UserResponseDto> updateUser(@PathVariable("id") long usersId, UserRequestDto requestDto) {
+		mLogger.info("updateUser  based on id  updateUser Strat()");
+		UserResponseDto UpdateUser = userService.updateUser(usersId, requestDto);
 		mLogger.debug("Recived updated user based on id updateUSer() :" + UpdateUser);
 		return ResponseEntity.ok().body(UpdateUser);
 

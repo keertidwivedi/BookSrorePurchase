@@ -17,9 +17,7 @@ import org.store.com.repo.UserRepository;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-	
-	  UserRepository userRepository;
-	 
+	UserRepository userRepository;
 
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -27,18 +25,8 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-		/*
-		 * Optional<User> optionalUser = userRepository.findByUserName(userName); if
-		 * (optionalUser.isPresent()) { User user = optionalUser.get();
-		 * System.out.println(user); return new UserDetails(user.getUserName(),
-		 * user.getPassword(), null); } else { throw new
-		 * UsernameNotFoundException("could not found user"); }
-		 */
-
 		User user = userRepository.findByUserName(userName);
-		// List<SimpleGrantedAuthority> grantedAuthorities =
-		// user.getAuthorities().map(authority -> new
-		// SimpleGrantedAuthority(authority)).collect(Collectors.toList());
+
 		if (user == null)
 
 			throw new UsernameNotFoundException("could not found user");

@@ -28,15 +28,14 @@ public class CommentServiceImp implements CommentService {
 
 	@Override
 	public CommentResponseDto createComments(long id, CommentRequestDto commentRequestDto) {
-		mLogger.info("createComments service has Strated()+" + id, commentRequestDto);
+		mLogger.info("createComments service implementation has Strated() and recieved+" + id, commentRequestDto);
 		Optional<BookResponseDto> idFoundDB = bookRepository.findById(id);
-		mLogger.info("Book dound for following id " + idFoundDB);
+		mLogger.info("Book found for following id " + idFoundDB);
 
 		if (idFoundDB.isPresent()) {
-
+			mLogger.info("Book is present ");
 			BookResponseDto book = idFoundDB.get();
-
-			// List<Book> newBook = new ArrayList<Book>();
+		
 
 			mLogger.info("book record from DB" + book);
 			mLogger.info(" Comment" + commentRequestDto);
@@ -44,7 +43,8 @@ public class CommentServiceImp implements CommentService {
 			CommentResponseDto comment = new CommentResponseDto();
 			comment.setText(commentRequestDto.getText()); // comment.setBook(book);
 			CommentResponseDto aveComment = commentRepository.save(comment);
-
+			mLogger.info("saving the comment in comment repository and returning" + aveComment);
+			mLogger.info("createComments service implementation has ended()");
 			return aveComment;
 		} else
 
@@ -53,11 +53,12 @@ public class CommentServiceImp implements CommentService {
 	}
 
 	@Override
-	public List<CommentResponseDto> getComments(long id) {
-		mLogger.info("getComments service has Strated()+" + id);
-		List<CommentResponseDto> comentsFromDB = commentRepository.findIdById(id);
-		mLogger.info("Command found in DB " + comentsFromDB);
+	public List<CommentResponseDto> getComments(long commentId) {
+		mLogger.info("getComments service implementation has Strated() and recieved+" + commentId);
 
+		List<CommentResponseDto> comentsFromDB = commentRepository.findIdById(commentId);
+		mLogger.info("Command found in DB " + comentsFromDB);
+		mLogger.info("getComments service implementation has ended()");
 		return comentsFromDB;
 	}
 
@@ -66,6 +67,7 @@ public class CommentServiceImp implements CommentService {
 		mLogger.info("getComments service has Strated()+");
 		List<Comment> allComentsFromDB = commentRepository.findAll();
 		mLogger.info("Comment found in DB " + allComentsFromDB);
+		mLogger.info("getComments service implementation has ended()");
 		return allComentsFromDB;
 
 	}
@@ -74,30 +76,37 @@ public class CommentServiceImp implements CommentService {
 	public List<CommentResponseDto> deleteById(long id) {
 		mLogger.info("deleteById service has Strated()+" + id);
 		List<CommentResponseDto> commentdelete = commentRepository.deleteById(id);
+		mLogger.info("createComments service implementation has ended()");
 		return commentdelete;
 
 	}
 
 	@Override
 	public CommentResponseDto updateCommenent(long bookId, long commentId, CommentRequestDto commentRequestDto) {
-		mLogger.info("updateCommenent service has Strated()+" + bookId, commentId, commentId);
+		mLogger.info("updateCommenent service has Strated()+" + bookId, commentId, commentRequestDto);
 
 		Optional<BookResponseDto> foundBookByIdInDB = bookRepository.findById(bookId);
-
+		mLogger.info("book record from db"+foundBookByIdInDB);
+		
 		BookResponseDto bookRecordFromDB = foundBookByIdInDB.get();
+		mLogger.info("getting book record from db"+bookRecordFromDB);
 
 		if (foundBookByIdInDB.isEmpty()) {
+			mLogger.info("book record is not present");
 			throw new BookNotFoundException("Book not found based  on Id");
 		}
 
 		Optional<CommentResponseDto> foundCommentByIdInDB = commentRepository.findById(commentId);
+		mLogger.info("comment record "+foundCommentByIdInDB);
 
 		CommentResponseDto fetchedFromDB = foundCommentByIdInDB.get();
+		mLogger.info("getting comment record from db"+fetchedFromDB);
 
 		fetchedFromDB.setText(commentRequestDto.getText());
 
 		CommentResponseDto updateComment = commentRepository.save(fetchedFromDB);
-
+		mLogger.info("updating the record and saving ");
+		mLogger.info("updateCommenent service implementation has ended()");
 		return updateComment;
 	}
 

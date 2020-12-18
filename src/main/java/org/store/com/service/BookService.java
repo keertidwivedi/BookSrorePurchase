@@ -12,7 +12,7 @@ public interface BookService {
 	// Create/add a Book
 	BookResponseDto createBook(BookRequestDto bookRequestDto);
 
-	List<BookResponseDto> getBookByName(BookRequestDto bookRequestDto);
+	List<BookResponseDto> getBookByName(String bookName);
 
 	Optional<BookResponseDto> getBookById(long bookId);
 
@@ -20,7 +20,4 @@ public interface BookService {
 
 	BookResponseDto updateBook(long id, BookRequestDto requestDto);
 
-	
-
-	
 }

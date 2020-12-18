@@ -1,6 +1,5 @@
 package org.store.com.ResponseDto;
 
-
 import org.store.com.model.User;
 
 import lombok.Getter;
@@ -17,7 +16,6 @@ public class UserResponseDto {
 	private String email;
 	private String password;
 
-	
 	public UserResponseDto(Long id, String name, String email, String password) {
 
 		this.id = id;
@@ -31,10 +29,8 @@ public class UserResponseDto {
 		this.email = email;
 	}
 
-	
-
 	public UserResponseDto(User user) {
-		
+
 	}
 
 	@Override

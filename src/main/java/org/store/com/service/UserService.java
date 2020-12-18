@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.store.com.RequestDto.UserRequestDto;
 import org.store.com.ResponseDto.UserResponseDto;
-import org.store.com.model.User;
 
 public interface UserService {
 

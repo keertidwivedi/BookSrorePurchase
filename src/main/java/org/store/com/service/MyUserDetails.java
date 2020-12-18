@@ -14,7 +14,7 @@ public class MyUserDetails implements UserDetails {
 	private String userName;
 	private String password;
 
-	private Set<? extends GrantedAuthority> authorities; // private Set<? extends GrantedAuthority>authorities;
+	private Set<? extends GrantedAuthority> authorities;
 
 	public MyUserDetails(String userName, String password, Set<? extends GrantedAuthority> authorities) {
 

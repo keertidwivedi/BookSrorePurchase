@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.store.com.ResponseDto.CommentResponseDto;
-import org.store.com.model.Book;
 import org.store.com.model.Comment;
 
 @Repository
