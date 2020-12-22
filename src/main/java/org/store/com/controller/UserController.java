@@ -52,7 +52,7 @@ public class UserController {
 	public ResponseEntity<List<UserResponseDto>> listAllUsers() {
 		mLogger.info("view all users controller getUser Strat()");
 		List<UserResponseDto> listOfUser = userService.listAllUsers();
-		mLogger.info("recieved losy of users"+listOfUser);
+		mLogger.debug("recieved losy of users"+listOfUser);
 		mLogger.info("view all users controller getUser ended()");
 		return ResponseEntity.ok().body(listOfUser);
 	}
@@ -89,7 +89,7 @@ public class UserController {
 
 
 	@DeleteMapping(path = Constants.DELETE_CONTROLLER_ENDPOINT)
-	public ResponseEntity<UserResponseDto> deleteById(@PathVariable("id") long userId) {
+	public ResponseEntity<UserResponseDto> deleteById(@PathVariable("userid") long userId) {
 		mLogger.info("delete user based on id deleteByID() Strat()");
 		UserResponseDto userResponseDto = userService.deleteById(userId);
 		mLogger.info("delete user based on id deleteByID() has ended");
@@ -97,9 +97,9 @@ public class UserController {
 	}
 
 	@PutMapping(path = Constants.UPDATE_CONTROLLER_ENDPOINT)
-	public ResponseEntity<UserResponseDto> updateUser(@PathVariable("id") long usersId, UserRequestDto requestDto) {
+	public ResponseEntity<UserResponseDto> updateUser(@PathVariable("userId") long userId, UserRequestDto requestDto) {
 		mLogger.info("updateUser  based on id  updateUser Strat()");
-		UserResponseDto UpdateUser = userService.updateUser(usersId, requestDto);
+		UserResponseDto UpdateUser = userService.updateUser(userId, requestDto);
 		mLogger.debug("Recived updated user based on id updateUSer() :" + UpdateUser);
 		return ResponseEntity.ok().body(UpdateUser);
 

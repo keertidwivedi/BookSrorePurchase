@@ -17,14 +17,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Optional<User> findByEmail(String email);
 
-	Optional<UserResponseDto> findById(long id);
+	User findById(long id);
 
-	UserResponseDto deleteById(long id);
+	User deleteById(long userId);
 
 	List<User> findAll();
 
 	User findByUserName(String userName);
 
-	UserResponseDto save(UserResponseDto updateUser);
+	User save(UserResponseDto updateUser);
 
 }

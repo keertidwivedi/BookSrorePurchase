@@ -1,6 +1,6 @@
 package org.store.com.service;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.store.com.Exception.BookNotFoundException;
-import org.store.com.Exception.StoreException;
 import org.store.com.RequestDto.BookRequestDto;
 import org.store.com.ResponseDto.BookResponseDto;
 import org.store.com.controller.BookController;
@@ -38,8 +37,8 @@ public class BookServiceImp implements BookService {
 		Book savedBook = bookRepository.save(newBook);
 		mLogger.info("book values have been saved "+ savedBook);
 		bookResponseDto.setBookName(savedBook.getBookName());
-		bookResponseDto.setBookName(savedBook.getAuthor());
-		bookResponseDto.setBookName(savedBook.getQuantity());
+		bookResponseDto.setBookAuthor(savedBook.getAuthor());
+		bookResponseDto.setQuantity(savedBook.getQuantity());
 		mLogger.info("saved values are set to bookResponseDto and are returned"+
 				bookResponseDto);
 		return bookResponseDto;
@@ -62,8 +61,9 @@ public class BookServiceImp implements BookService {
 		Optional<BookResponseDto> searchbyId = bookRepository.findById(bookId);
 		mLogger.info("searched record brom datbase" + searchbyId);
 		if (searchbyId.isEmpty()) {
-			throw new BookNotFoundException("Book not found");// exception change
-		}
+			
+			throw new BookNotFoundException("Book not found");
+				}
 		return searchbyId;
 	}
 

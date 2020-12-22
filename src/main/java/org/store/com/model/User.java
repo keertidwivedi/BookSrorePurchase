@@ -20,7 +20,8 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name =  "id")
+	private Long userId;
 
 	private String userName;
 
@@ -34,21 +35,21 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password + ", role="
+		return "User [id=" + userId + ", userName=" + userName + ", email=" + email + ", password=" + password + ", role="
 				+ role + "]";
 	}
 
-	public User(Long id, String userName, String email, String password, Set<Role> role) {
+	public User(Long userId, String userName, String email, String password, Set<Role> role) {
 
-		this.id = id;
+		this.userId = userId;
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
 		this.role = role;
 	}
 
-	public User(Long id, String userName, String email, String password) {
-		this.id = id;
+	public User(Long userId, String userName, String email, String password) {
+		this.userId = userId;
 		this.userName = userName;
 		this.email = email;
 		this.password = password;

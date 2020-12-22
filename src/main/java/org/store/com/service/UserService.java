@@ -21,7 +21,7 @@ public interface UserService {
 
 	UserResponseDto updateUser(long id, UserRequestDto requestDto);
 
-	Optional<UserResponseDto> getUserById(long id);
+	UserResponseDto getUserById(long id);
 
 	List<UserResponseDto> listAllUsers();
 

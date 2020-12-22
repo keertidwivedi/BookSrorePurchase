@@ -13,9 +13,9 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
 	List<BookResponseDto> findByBookName(String bookName);
 
-	List<BookResponseDto> getBookById(long id);
+	//List<BookResponseDto> findBybookId(long bookId);
 
-	Optional<BookResponseDto> findById(long id);
+	Optional<BookResponseDto> findById(long bookId);
 
 	Optional<Book> deleteById(long id);
 

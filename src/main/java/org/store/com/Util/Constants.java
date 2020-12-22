@@ -11,8 +11,8 @@ public class Constants {
 
 	public static final String LIST_OF_ADMINS_CONTROLLER_ENDPOINT = "/admin/role";
 	public static final String LIST_OF_USER_ROLE_CONTROLLER_ENDPOINT = "/user/role";
-	public static final String DELETE_CONTROLLER_ENDPOINT = "user/delete/{id}";
-	public static final String UPDATE_CONTROLLER_ENDPOINT = "user/{id}";
+	public static final String DELETE_CONTROLLER_ENDPOINT = "user/delete/{userid}";
+	public static final String UPDATE_CONTROLLER_ENDPOINT = "user/{userId}";
 	
 	
 	//CONTANTS FOR COMMENT CONTROLLER

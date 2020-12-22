@@ -52,7 +52,7 @@ public class BookController {
 	}
 
 	@GetMapping(path = Constants.GETBOOK_BY_ID_CONTROLLER_ENDPOINT)
-	public Optional<BookResponseDto> getBookById(@PathVariable("id") long bookId) {
+	public Optional<BookResponseDto> getBookById(@PathVariable("bookId") long bookId) {
 		mLogger.info("getBookByd Controller has Strated(),recived " + bookId);
 
 		Optional<BookResponseDto> bookBasedOnId = bookService.getBookById(bookId);
@@ -63,7 +63,7 @@ public class BookController {
 	}
 
 	@DeleteMapping(path = Constants.DELETE_BOOK_BYID_CONTROLLER_ENDPOINT)
-	public Optional<Book> deleteById(@PathVariable("id") long bookId) {
+	public Optional<Book> deleteById(@PathVariable("bookId") long bookId) {
 		mLogger.info("deleteById Controller has Strated()+ book id 	recieved" + bookId);
 		Optional<Book> deletedBook = bookService.deleteById(bookId);
 

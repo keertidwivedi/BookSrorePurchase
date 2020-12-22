@@ -6,11 +6,15 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.UniqueElements;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRequestDto {
 
 	@NotNull
@@ -27,13 +31,6 @@ public class UserRequestDto {
 	@Size(min = 10, max = 60, message = "Should contain one Capital and one special charecter")
 	private String password;
 
-	public UserRequestDto(@NotNull @Size(min = 7) @NotBlank(message = "Name is mandatory") String userName,
-			@NotNull @NotBlank(message = "email is mandatory") @UniqueElements String email,
-			@NotBlank(message = "password is mandatory") @Size(min = 10, max = 60, message = "Should contain one Capital and one special charecter") String password) {
-		this.userName = userName;
-		this.email = email;
-		this.password = password;
-	}
 
 	@Override
 	public String toString() {

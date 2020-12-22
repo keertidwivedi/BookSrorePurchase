@@ -44,9 +44,9 @@ public class UserServiceImp implements UserService {
 	public UserResponseDto createRoleAdmin(UserRequestDto userRequestDto) {
 		mLogger.info("createRoleAdmin service implementation has started , recieved" + userRequestDto);
 		UserResponseDto userResponseDto = new UserResponseDto();
-		mLogger.info("UserResponseDto object is created");
+		mLogger.debug("UserResponseDto object is created");
 		User user = new User();
-		mLogger.info("User object is created");
+		mLogger.debug("User object is created");
 		if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
 			throw new BookNotFoundException("Email alreay presnt");
 
@@ -56,16 +56,16 @@ public class UserServiceImp implements UserService {
 			user.setUserName(userRequestDto.getUserName());
 
 			Optional<Role> roleOpt = roleRepository.findByName("admin");
-			mLogger.info(" found with role admin "+roleOpt);
+			mLogger.debug(" found with role admin " + roleOpt);
 			if (roleOpt.isPresent()) {
-				mLogger.info(" admin is presnt in DB ");
+				mLogger.debug(" admin is presnt in DB ");
 				user.getRole().add(roleOpt.get());
 
 			} else {
 				Role role = new Role();
-				mLogger.info("  Role object has been created"+role);
+				mLogger.debug("  Role object has been created" + role);
 				role.setName("admin");
-				mLogger.info("  setting value tp admin");
+				mLogger.debug("  setting value tp admin");
 				Role savedRole = roleRepository.save(role);
 				System.out.println(savedRole.toString());
 				user.getRole().add(savedRole);
@@ -77,14 +77,14 @@ public class UserServiceImp implements UserService {
 			user.setPassword(encodedPassword);
 
 			User AdminRoleSaved = userRepository.save(user);
-			mLogger.info(" saving the record " + AdminRoleSaved );
-			userResponseDto.setId(AdminRoleSaved.getId());
+			mLogger.debug(" saving the record " + AdminRoleSaved);
+			userResponseDto.setUserId(AdminRoleSaved.getUserId());
 			userResponseDto.setEmail(AdminRoleSaved.getEmail());
 			userResponseDto.setName(AdminRoleSaved.getUserName());
-			mLogger.info("setting the values to userResponseDto"+userResponseDto );
+			mLogger.debug("setting the values to userResponseDto" + userResponseDto);
 
-			if (userRepository.findById(AdminRoleSaved.getId()).isPresent()) {
-				mLogger.info(" usere with role  admin has been create sucessfully");
+			if (userRepository.findById(AdminRoleSaved.getUserId()).isPresent()) {
+				mLogger.debug(" usere with role  admin has been create sucessfully");
 			} else {
 				throw new UsernameNotFoundException("user Not created");
 			}
@@ -96,54 +96,53 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public UserResponseDto createUserRoleUser(UserRequestDto userRequestDto) {
-		mLogger.info("createUserRoleUser serviceImp has Start() , recieved  "+userRequestDto );
+		mLogger.info("createUserRoleUser serviceImp has Start() , recieved  " + userRequestDto);
 		UserResponseDto responseDto = new UserResponseDto();
-		mLogger.info("object of  UserResponseDto has created"+ responseDto);
+		mLogger.debug("object of  UserResponseDto has created" + responseDto);
 		List<String> userNames = new ArrayList<>();
-		mLogger.info(" list has create"+userNames);
+		mLogger.debug(" list has create" + userNames);
 		userNames.add("user");
 
 		User userNewObject = new User();
-		mLogger.info("new user object created"+userNewObject);
+		mLogger.debug("new user object created" + userNewObject);
 		if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
-			mLogger.info("Email is not presnt ");
+			mLogger.debug("Email is not presnt ");
 			throw new UsernameNotFoundException("the email  already present");
 
 		} else {
 			userNewObject.setEmail(userRequestDto.getEmail());
 			userNewObject.setPassword(userRequestDto.getPassword());
 			userNewObject.setUserName(userRequestDto.getUserName());
-		
-			mLogger.info("finding with name user ");
+
+			mLogger.debug("finding with name user ");
 			Optional<Role> roleOpt = roleRepository.findByName("user");
-			mLogger.info("found with role user"+roleOpt);
-			
+			mLogger.debug("found with role user" + roleOpt);
+
 			if (roleOpt.isPresent()) {
-				mLogger.info("role with user is present");
+				mLogger.debug("role with user is present");
 				userNewObject.getRole().add(roleOpt.get());
 
 			} else {
-				mLogger.info("role with user nor presnt creating one");
+				mLogger.debug("role with user nor presnt creating one");
 				Role role = new Role();
-				mLogger.info("new role object created"+role);
+				mLogger.debug("new role object created" + role);
 				role.setName("user");
 				Role saveRole = roleRepository.save(role);
-				mLogger.info("savinf with role after creating it"+saveRole);
+				mLogger.debug("savinf with role after creating it" + saveRole);
 				userNewObject.getRole().add(saveRole);
-				
 
 			}
 		}
 
 		User userRoleSaved = userRepository.save(userNewObject);
-		responseDto.setId(userRoleSaved.getId());
+		responseDto.setUserId(userRoleSaved.getUserId());
 		responseDto.setName(userRoleSaved.getUserName());
 		responseDto.setPassword(userRoleSaved.getPassword());
 		responseDto.setEmail(userRoleSaved.getEmail());
 
-		if (userRepository.findById(userRoleSaved.getId()).isPresent())
-			mLogger.info(" usere with role has been create sucessfully");
-			
+		if (userRepository.findById(userRoleSaved.getUserId()).isPresent())
+			mLogger.debug(" usere with role has been create sucessfully");
+
 		else {
 			throw new UsernameNotFoundException("cannot create a user");
 		}
@@ -157,19 +156,19 @@ public class UserServiceImp implements UserService {
 		{
 			mLogger.info("getAdmin serviceImp has Start()  ");
 			List<UserResponseDto> userResponseDtoList = new ArrayList<UserResponseDto>();
-			mLogger.info("List<UserResponseDto object has been created"+userResponseDtoList);
+			mLogger.debug("List<UserResponseDto object has been created" + userResponseDtoList);
 			Optional<Role> adminRole = roleRepository.findByName("admin");
-			mLogger.info(" found by name admin in rolerepository"+adminRole);
+			mLogger.debug(" found by name admin in rolerepository" + adminRole);
 			ArrayList<User> adminUsersList = userRepository.findByRole(adminRole);
-				System.out.println(adminUsersList + "-------------");
+			System.out.println(adminUsersList + "-------------");
 			UserResponseDto newUserResponseDto;
 			for (User user : adminUsersList)
 
 			{
-				mLogger.info(" loop started for users");
+				mLogger.debug(" loop started for users");
 				newUserResponseDto = new UserResponseDto();
 
-				newUserResponseDto.setId(user.getId());
+				newUserResponseDto.setUserId(user.getUserId());
 				newUserResponseDto.setName(user.getUserName());
 
 				newUserResponseDto.setEmail(user.getEmail());
@@ -187,91 +186,105 @@ public class UserServiceImp implements UserService {
 	public List<UserResponseDto> getUser() {
 		mLogger.info("getUser serviceImp has Start()  ");
 		List<UserResponseDto> userREsponseDtoListOfUserRole = new ArrayList<>();
-		mLogger.info("List<UserResponseDto object has been created");
+		mLogger.debug("List<UserResponseDto object has been created");
 		Optional<Role> userRole = roleRepository.findByName("user");
-		mLogger.info("found user in db"+userRole);
+		mLogger.debug("found user in db" + userRole);
 		ArrayList<User> adminUsersList = userRepository.findByRole(userRole);
 		UserResponseDto newUSerREsponseDto;
 
 		for (User user : adminUsersList) {
 			newUSerREsponseDto = new UserResponseDto();
-			newUSerREsponseDto.setId(user.getId());
+			newUSerREsponseDto.setUserId(user.getUserId());
 			newUSerREsponseDto.setEmail(user.getEmail());
 			newUSerREsponseDto.setName(user.getUserName());
 			userREsponseDtoListOfUserRole.add(newUSerREsponseDto);
 
 		}
-		mLogger.info("getUser serviceImp has ended()  ");
+		mLogger.debug("getUser serviceImp has ended()  ");
 		return userREsponseDtoListOfUserRole;
 
 	}
 
 	@Override
 	public UserResponseDto deleteById(long userId) {
-		mLogger.info("deleteById serviceImp has Start() ,  recieved "+ userId);
+		mLogger.debug("deleteById serviceImp has Start() ,  recieved " + userId);
+		UserResponseDto responseDto = new UserResponseDto();
 
-		if (userId < 1) {
+		
 
-			throw new NullPointerException("id is not present");
-		}
-
-		UserResponseDto userById = userRepository.deleteById(userId);
-		mLogger.info("deleteById serviceImp has ended() ,  recieved "+ userId);
-		return userById;
+		User userById = userRepository.deleteById(userId);
+		
+		responseDto.setName(userById.getUserName());
+		responseDto.setUserId(userById.getUserId());
+		responseDto.setEmail(userById.getEmail());
+		mLogger.info("deleteById serviceImp has ended() ,  recieved " + userId);
+		return responseDto;
 
 	}
-	
 
 	@Override
 	public UserResponseDto updateUser(long userId, UserRequestDto requestDto) {
-		mLogger.info("updateUser serviceImp has Start() ,  recieved "+ userId ,requestDto);
-		Optional<UserResponseDto> userFromDBOpt = userRepository.findById(userId);
-		if (userFromDBOpt.isEmpty()) {
+		mLogger.info("updateUser serviceImp has Start() ,  recieved " + userId, requestDto);
+		User userFromDBOpt = userRepository.findById(userId);
+		mLogger.debug("findbyId from DB" + userFromDBOpt);
+		if (userFromDBOpt == null) {
 			throw new UsernameNotFoundException("User no found");
 		}
-		UserResponseDto updateUser = userFromDBOpt.get();
-		updateUser.setName(requestDto.getUserName());
-		updateUser.setEmail(requestDto.getEmail());
 
-		UserResponseDto updatedUser = userRepository.save(updateUser);
-		mLogger.info("updateUser serviceImp has ended()");
-		return updatedUser;
+		mLogger.debug("set the values to userResponseDto" + userFromDBOpt);
+		User updatedUser = userRepository.save(userFromDBOpt);
+
+		UserResponseDto userResponseDto = new UserResponseDto();
+
+		userResponseDto.setName(userFromDBOpt.getUserName());
+		userResponseDto.setEmail(userFromDBOpt.getEmail());
+		userResponseDto.setUserId(userFromDBOpt.getUserId());
+
+		mLogger.debug("saved values" + userResponseDto);
+		mLogger.info("updateUser serviceImp has ended() ,  recieved " );
+		return userResponseDto;
 
 	}
 
 	@Override
-	public Optional<UserResponseDto> getUserById(long userId) {
+	public UserResponseDto getUserById(long userId) {
 		mLogger.info("getUserById serviceImp has Start() ");
-		Optional<UserResponseDto> UsersList = userRepository.findById(userId);
-		mLogger.info("found record for User based on id "+UsersList);
-		if (UsersList.get().getId() == userId) {
-			return UsersList;
-		}
+		UserResponseDto responseDto = new UserResponseDto();
+		User Users = userRepository.findById(userId);
+		mLogger.debug("found record for User based on id " + Users);
+		if (Users.getUserId() == userId) {
 
-		return UsersList;
+			responseDto.setName(Users.getUserName());
+			responseDto.setEmail(Users.getEmail());
+
+			return responseDto;
+		}
+		mLogger.info("getUserById serviceImp has ended() ,  recieved " );
+		return responseDto;
 	}
 
 	@Override
 	public List<UserResponseDto> listAllUsers() {
 		mLogger.info("listAllUsers serviceImp has Start() ");
 		List<UserResponseDto> newArrayListOfUser = new ArrayList<UserResponseDto>();
-		mLogger.info("list<UserResponseDto> object has been created " + newArrayListOfUser);
+		mLogger.debug("list<UserResponseDto> object has been created " + newArrayListOfUser);
 		UserResponseDto newUSerREsponseDto;
 
 		List<User> listOfUsers = userRepository.findAll();
 
-		mLogger.info("listodUsers searched in database " + listOfUsers);
+		mLogger.debug("listodUsers searched in database " + listOfUsers);
 
 		for (User user : listOfUsers) {
-			mLogger.info("loop for list of users has started");
+			mLogger.debug("loop for list of users has started");
 			newUSerREsponseDto = new UserResponseDto();
-			newUSerREsponseDto.setId(user.getId());
+			newUSerREsponseDto.setUserId(user.getUserId());
 			newUSerREsponseDto.setEmail(user.getEmail());
 			newUSerREsponseDto.setName(user.getUserName());
 
 			newArrayListOfUser.add(newUSerREsponseDto);
 			mLogger.info("adding reord to usersResponseDto" + newArrayListOfUser);
 		}
+		mLogger.info("listAllUsers serviceImp has ended() ,  recieved " );
 		return newArrayListOfUser;
 
 	}
