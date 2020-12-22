@@ -11,14 +11,12 @@ import org.store.com.model.Book;
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
 
-	List<BookResponseDto> findByBookName(String bookName);
+	List<Book> findByBookName(String bookName);
 
-	//List<BookResponseDto> findBybookId(long bookId);
-
-	Optional<BookResponseDto> findById(long bookId);
+	Book findById(long bookId);
 
 	Optional<Book> deleteById(long id);
 
-	BookResponseDto save(BookResponseDto newBook);
+	Book save(BookResponseDto newBook);
 
 }

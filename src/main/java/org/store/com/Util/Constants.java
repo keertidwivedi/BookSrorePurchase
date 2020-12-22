@@ -39,11 +39,11 @@ public class Constants {
 	
 	public static final String GET_BY_BOOK_NAME_CONTROLLER_ENDPOINT = "/book/{bookName}";
 	
-	public static final String GETBOOK_BY_ID_CONTROLLER_ENDPOINT = "/books/{id}";
+	public static final String GETBOOK_BY_ID_CONTROLLER_ENDPOINT = "/books/{bookId}";
 	
-	public static final String DELETE_BOOK_BYID_CONTROLLER_ENDPOINT = "/book/{id}";
+	public static final String DELETE_BOOK_BYID_CONTROLLER_ENDPOINT = "/book/{bookId}";
 	
-	public static final String UPDATE_BOOK_BYID_CONTROLLER_ENDPOINT = "/book/{id}";
+	public static final String UPDATE_BOOK_BYID_CONTROLLER_ENDPOINT = "/book/{bookId}";
 	
 	
 	

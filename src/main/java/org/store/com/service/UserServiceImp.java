@@ -210,10 +210,8 @@ public class UserServiceImp implements UserService {
 		mLogger.debug("deleteById serviceImp has Start() ,  recieved " + userId);
 		UserResponseDto responseDto = new UserResponseDto();
 
-		
-
 		User userById = userRepository.deleteById(userId);
-		
+
 		responseDto.setName(userById.getUserName());
 		responseDto.setUserId(userById.getUserId());
 		responseDto.setEmail(userById.getEmail());
@@ -232,16 +230,18 @@ public class UserServiceImp implements UserService {
 		}
 
 		mLogger.debug("set the values to userResponseDto" + userFromDBOpt);
-		User updatedUser = userRepository.save(userFromDBOpt);
 
 		UserResponseDto userResponseDto = new UserResponseDto();
 
-		userResponseDto.setName(userFromDBOpt.getUserName());
-		userResponseDto.setEmail(userFromDBOpt.getEmail());
-		userResponseDto.setUserId(userFromDBOpt.getUserId());
+		userFromDBOpt.setUserName(requestDto.getUserName());
+		userFromDBOpt.setEmail(requestDto.getEmail());
 
-		mLogger.debug("saved values" + userResponseDto);
-		mLogger.info("updateUser serviceImp has ended() ,  recieved " );
+		User savedUserObject = userRepository.save(userFromDBOpt);
+		userResponseDto.setName(savedUserObject.getUserName());
+		userResponseDto.setEmail(savedUserObject.getEmail());
+
+		mLogger.debug("saving the updated values" + userResponseDto);
+
 		return userResponseDto;
 
 	}
@@ -259,7 +259,7 @@ public class UserServiceImp implements UserService {
 
 			return responseDto;
 		}
-		mLogger.info("getUserById serviceImp has ended() ,  recieved " );
+		mLogger.info("getUserById serviceImp has ended() ,  recieved ");
 		return responseDto;
 	}
 
@@ -284,7 +284,7 @@ public class UserServiceImp implements UserService {
 			newArrayListOfUser.add(newUSerREsponseDto);
 			mLogger.info("adding reord to usersResponseDto" + newArrayListOfUser);
 		}
-		mLogger.info("listAllUsers serviceImp has ended() ,  recieved " );
+		mLogger.info("listAllUsers serviceImp has ended() ,  recieved ");
 		return newArrayListOfUser;
 
 	}

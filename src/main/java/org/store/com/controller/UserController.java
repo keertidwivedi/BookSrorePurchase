@@ -97,7 +97,7 @@ public class UserController {
 	}
 
 	@PutMapping(path = Constants.UPDATE_CONTROLLER_ENDPOINT)
-	public ResponseEntity<UserResponseDto> updateUser(@PathVariable("userId") long userId, UserRequestDto requestDto) {
+	public ResponseEntity<UserResponseDto> updateUser(@PathVariable("userId") long userId, @RequestBody UserRequestDto requestDto) {
 		mLogger.info("updateUser  based on id  updateUser Strat()");
 		UserResponseDto UpdateUser = userService.updateUser(userId, requestDto);
 		mLogger.debug("Recived updated user based on id updateUSer() :" + UpdateUser);

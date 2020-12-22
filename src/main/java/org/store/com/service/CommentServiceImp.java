@@ -29,15 +29,11 @@ public class CommentServiceImp implements CommentService {
 	@Override
 	public CommentResponseDto createComments(long id, CommentRequestDto commentRequestDto) {
 		mLogger.info("createComments service implementation has Strated() and recieved+" + id, commentRequestDto);
-		Optional<BookResponseDto> idFoundDB = bookRepository.findById(id);
+		Book idFoundDB = bookRepository.findById(id);
 		mLogger.info("Book found for following id " + idFoundDB);
 
-		if (idFoundDB.isPresent()) {
-			mLogger.info("Book is present ");
-			BookResponseDto book = idFoundDB.get();
-		
-
-			mLogger.info("book record from DB" + book);
+		if (idFoundDB.getBookId() == id) {
+			
 			mLogger.info(" Comment" + commentRequestDto);
 
 			CommentResponseDto comment = new CommentResponseDto();
@@ -85,13 +81,11 @@ public class CommentServiceImp implements CommentService {
 	public CommentResponseDto updateCommenent(long bookId, long commentId, CommentRequestDto commentRequestDto) {
 		mLogger.info("updateCommenent service has Strated()+" + bookId, commentId, commentRequestDto);
 
-		Optional<BookResponseDto> foundBookByIdInDB = bookRepository.findById(bookId);
+		Book foundBookByIdInDB = bookRepository.findById(bookId);
 		mLogger.info("book record from db"+foundBookByIdInDB);
 		
-		BookResponseDto bookRecordFromDB = foundBookByIdInDB.get();
-		mLogger.info("getting book record from db"+bookRecordFromDB);
-
-		if (foundBookByIdInDB.isEmpty()) {
+	
+		if (foundBookByIdInDB.getBookId() < 1) {
 			mLogger.info("book record is not present");
 			throw new BookNotFoundException("Book not found based  on Id");
 		}

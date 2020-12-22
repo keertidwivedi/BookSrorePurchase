@@ -3,6 +3,7 @@ package org.store.com.RequestDto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class BookRequestDto {
 
 	@NotNull
@@ -22,12 +24,9 @@ public class BookRequestDto {
 	@NotNull
 	private String quantity;
 
-	public BookRequestDto(@NotNull @NotBlank(message = "BookName is mandatory") String bookName, @NotNull String author,
-			@NotNull String quantity) {
-		super();
-		this.bookName = bookName;
-		this.author = author;
-		this.quantity = quantity;
+	@Override
+	public String toString() {
+		return "BookRequestDto [bookName=" + bookName + ", author=" + author + ", quantity=" + quantity + "]";
 	}
 
 }

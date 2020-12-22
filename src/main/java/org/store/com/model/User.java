@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -39,14 +41,6 @@ public class User {
 				+ role + "]";
 	}
 
-	public User(Long userId, String userName, String email, String password, Set<Role> role) {
-
-		this.userId = userId;
-		this.userName = userName;
-		this.email = email;
-		this.password = password;
-		this.role = role;
-	}
 
 	public User(Long userId, String userName, String email, String password) {
 		this.userId = userId;

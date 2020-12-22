@@ -14,9 +14,9 @@ public interface BookService {
 
 	List<BookResponseDto> getBookByName(String bookName);
 
-	Optional<BookResponseDto> getBookById(long bookId);
+	BookResponseDto getBookById(long bookId);
 
-	Optional<Book> deleteById(long bookId);
+	BookResponseDto deleteById(long bookId);
 
 	BookResponseDto updateBook(long id, BookRequestDto requestDto);
 

@@ -16,6 +16,7 @@ import org.store.com.ResponseDto.BookResponseDto;
 
 import com.sun.istack.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -37,11 +39,6 @@ public class Comment {
 	@JoinColumn(name = "book_id")
 	private Book book;
 
-	public Comment(Long id, String text, Book book) {
-
-		this.id = id;
-		this.text = text;
-		this.book = book;
-	}
+	
 
 }
