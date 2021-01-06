@@ -58,11 +58,13 @@ public class BookServiceImp implements BookService {
 			newBookREsponseDto = new BookResponseDto();
 			newBookREsponseDto.setBookName(book.getBookName());
 			newBookREsponseDto.setBookAuthor(book.getAuthor());
-			newBookREsponseDto.setComment(book.getComment());
+		
 			newBookREsponseDto.setQuantity(book.getQuantity());
-
+			newBookREsponseDto.setComment(book.getComment());
 			listBookResponseDto.add(newBookREsponseDto);
+			
 		}
+	
 		mLogger.info("getBookByName has been ended ");
 		return listBookResponseDto;
 

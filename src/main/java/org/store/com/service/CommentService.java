@@ -14,7 +14,7 @@ public interface CommentService {
 
 	public List<Comment> getComments();
 
-	public List<CommentResponseDto> deleteById(long id);
+	public CommentResponseDto deleteById(long id);
 
 	public CommentResponseDto updateCommenent(long bookId, long commentId, CommentRequestDto commentRequestDto);
 

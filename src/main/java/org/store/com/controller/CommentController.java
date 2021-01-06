@@ -1,13 +1,11 @@
 
 package org.store.com.controller;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.List; 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.store.com.RequestDto.BookRequestDto;
 import org.store.com.RequestDto.CommentRequestDto;
 import org.store.com.ResponseDto.CommentResponseDto;
 import org.store.com.Util.Constants;
-import org.store.com.model.Book;
 import org.store.com.model.Comment;
-import org.store.com.repo.BookRepository;
-import org.store.com.repo.CommentRepository;
 import org.store.com.service.CommentService;
 
 @RestController
@@ -34,15 +28,15 @@ public class CommentController {
 	private CommentService commentService;
 
 	@PostMapping(path = Constants.CREATE_COMMENT_CONTROLLER_ENDPOINT)
-	public CommentResponseDto createComments(@PathVariable("id") long commentId, @RequestBody CommentRequestDto commentRequestDto) {
-		mLogger.info("createComments Controller has Strated()+ recieved" + commentId + commentRequestDto);
-		CommentResponseDto saveBook = commentService.createComments(commentId, commentRequestDto);
-		mLogger.info("createComments Controller has ended()+" + commentId);
+	public CommentResponseDto createComments(@PathVariable("bookId") long bookId, @RequestBody CommentRequestDto commentRequestDto) {
+		mLogger.info("createComments Controller has Strated()+ recieved" + bookId + commentRequestDto);
+		CommentResponseDto saveBook = commentService.createComments(bookId, commentRequestDto);
+		mLogger.info("createComments Controller has ended()+" + bookId);
 		return saveBook;
 	}
 
 	@GetMapping(path = Constants.GETBYID_COMMENTS_CONTROLLER_ENDPOINT)
-	public List<CommentResponseDto> getComments(@PathVariable("id") long commentId) {
+	public List<CommentResponseDto> getComments(@PathVariable("commentId") long commentId) {
 		mLogger.info("getComments Controller has Strated() recieved+" + commentId);
 		List<CommentResponseDto> Comments = commentService.getComments(commentId);
 		mLogger.info("getComments Controller has ended()+" + Comments);
@@ -58,16 +52,16 @@ public class CommentController {
 	}
 
 	@DeleteMapping(path = Constants.DELETEBYID_COMMENTS_CONTROLLER_ENDPOINT)
-	public List<CommentResponseDto> deleteById(@PathVariable("id") long commentId) {
+	public CommentResponseDto deleteById(@PathVariable("commentId") long commentId) {
 		mLogger.info("deleteById Controller has Strated() recieved commentid+" + commentId);
-		List<CommentResponseDto> deletedComments = commentService.deleteById(commentId);
+		CommentResponseDto deletedComments = commentService.deleteById(commentId);
 		mLogger.info("deleteById Controller has ended()+" + deletedComments);
 		return deletedComments;
 	}
 
-	@DeleteMapping(path = Constants.UPDATE_COMMENTS_CONTROLLER_ENDPOINT)
+	@PutMapping(path = Constants.UPDATE_COMMENTS_CONTROLLER_ENDPOINT)
 	public CommentResponseDto updateComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId,
-			CommentRequestDto commentRequestDto) {
+			@RequestBody CommentRequestDto commentRequestDto) {
 		mLogger.info("updateComment Controller has ended()+" + bookId);
 		CommentResponseDto deletComment = commentService.updateCommenent(bookId, commentId, commentRequestDto);
 

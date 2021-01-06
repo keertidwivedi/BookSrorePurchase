@@ -13,13 +13,13 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 	// List<Comment> getCommentByBook(String bookName);
 
-	List<CommentResponseDto> findIdById(long id);
+	List<Comment> findIdById(long commentId);
 
-	Optional<CommentResponseDto> findById(long id);
+	Optional<Comment> findById(long CommentId);
 
-	CommentResponseDto save(CommentResponseDto comment);
+	Comment save(CommentResponseDto comment);
 
 	List<Comment> findAll();
 
-	List<CommentResponseDto> deleteById(long id);
+	Comment deleteById(long commentId);
 }

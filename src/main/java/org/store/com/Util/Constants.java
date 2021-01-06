@@ -17,15 +17,15 @@ public class Constants {
 	
 	//CONTANTS FOR COMMENT CONTROLLER
 	
-	public static final String CREATE_COMMENT_CONTROLLER_ENDPOINT = "/comments/{id}";
+	public static final String CREATE_COMMENT_CONTROLLER_ENDPOINT = "/comments/{bookId}";
 	
-	public static final String GETBYID_COMMENTS_CONTROLLER_ENDPOINT = "/comment/{id}";
+	public static final String GETBYID_COMMENTS_CONTROLLER_ENDPOINT = "/comment/{commentId}";
 	
 	
 	public static final String GETALL_COMMENTS_CONTROLLER_ENDPOINT = "/comments";
 	
 	
-	public static final String DELETEBYID_COMMENTS_CONTROLLER_ENDPOINT = "/comments/{id}";
+	public static final String DELETEBYID_COMMENTS_CONTROLLER_ENDPOINT = "/comments/{commentId}";
 	
 	public static final String UPDATE_COMMENTS_CONTROLLER_ENDPOINT = "/book/{bookId}/commenet/{commentId}";
 	
